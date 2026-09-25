@@ -17,7 +17,7 @@ export function openMenu({ canContinue, onNew, onContinue }) {
       h('h1', { class: 'menu-title' }, '만족도 급락 사건'),
       h('p', { class: 'menu-sub' }, '전사 리더 필수 과정 · 리더십 + AI 교육'),
       h('div', { class: 'menu-drop' }, h('span', { class: 'from' }, '4.8'), h('span', {}, '→'), h('span', { class: 'to' }, '2.1'), h('span', { class: 'unit' }, '/ 5.0 교육 만족도 (1차수 → 2차수)')),
-      h('p', { class: 'menu-brief' }, '철강 시황이 얼어붙고 스마트팩토리 전환이 급해진 가운데, 전사 리더 대상 리더십·AI 교육이 필수가 됐다. 본사 리더가 들은 1차수는 4.8. 제철소 현장 리더가 참가한 이번 차수는 2.1. 여섯 명의 관계자를 만나 진술을 듣고, 문서를 찾고, 모순을 짚어 만족도가 떨어진 진짜 원인의 구조를 밝혀내자.'),
+      h('p', { class: 'menu-brief' }, '현장을 이끄는 리더십이 다시 강조되고 AX(AI 전환)가 본격화되면서, 전사 리더 대상 리더십·AI 교육이 필수가 됐다. 본사 리더가 들은 1차수는 4.8. 제철소 현장 리더가 참가한 이번 차수는 2.1. 여섯 명의 관계자를 만나 진술을 듣고, 문서를 찾고, 모순을 짚어 만족도가 떨어진 진짜 원인의 구조를 밝혀내자.'),
       h('div', { class: 'menu-actions' }, newBtn, contBtn),
       h(
         'div',
