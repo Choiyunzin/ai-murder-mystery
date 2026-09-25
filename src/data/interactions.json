@@ -1,0 +1,274 @@
+{
+  "p_ai_material": {
+    "results": [
+      {
+        "lines": [
+          "'AI 활용 실습 v3 — 범용 템플릿'.",
+          "예제가 전부 개발자용 코드 자동완성, 프롬프트 문법이다.",
+          "설비 데이터나 조업일지, 안전 보고서 같은 현장 사례는 보이지 않는다."
+        ],
+        "effects": {
+          "clues": [
+            "cl_generic_template"
+          ]
+        }
+      }
+    ]
+  },
+  "p_ai_laptop": {
+    "results": [
+      {
+        "lines": [
+          "실습 파일 속성을 확인했다.",
+          "생성 시각: 교육 전날 23:47.",
+          "급하게 만든 흔적이 역력하다."
+        ],
+        "effects": {
+          "clues": [
+            "cl_rushed_prep"
+          ]
+        }
+      }
+    ]
+  },
+  "p_morning_board": {
+    "results": [
+      {
+        "lines": [
+          "지워지다 만 글씨가 남아 있다.",
+          "'실습 3h → ?'  옆에 '설비 데이터 예제'라고 적었다가 지운 흔적."
+        ]
+      }
+    ]
+  },
+  "p_slides": {
+    "results": [
+      {
+        "lines": [
+          "리더십 교육 슬라이드를 넘겨 본다.",
+          "사례가 전부 IT 회사 이야기다. 하단 구석에 그 회사 로고와 3년 전 날짜가 그대로 남아 있다."
+        ],
+        "effects": {
+          "clues": [
+            "cl_reused_slides"
+          ]
+        }
+      }
+    ]
+  },
+  "p_practice": {
+    "results": [
+      {
+        "lines": [
+          "'3교대 현장 반장과의 1on1 — 역할극 워크시트 (초안)'.",
+          "표지 위에 X 표시가 크게 그어져 있다."
+        ],
+        "effects": {
+          "clues": [
+            "cl_new_practice_dropped"
+          ]
+        }
+      }
+    ]
+  },
+  "p_drawer": {
+    "results": [
+      {
+        "requires": {
+          "not": {
+            "evidence": [
+              "ev_memo"
+            ]
+          }
+        },
+        "lines": [
+          "서랍 안쪽에 접힌 메모가 있다.",
+          "박피엠이 작성한 예산 조정 메모다."
+        ],
+        "effects": {
+          "evidence": [
+            "ev_memo"
+          ]
+        }
+      },
+      {
+        "lines": [
+          "이미 확인한 서랍이다."
+        ]
+      }
+    ]
+  },
+  "p_files": {
+    "results": [
+      {
+        "requires": {
+          "not": {
+            "evidence": [
+              "ev_memo"
+            ]
+          }
+        },
+        "lines": [
+          "교육 운영 관련 파일철이다.",
+          "오후 리더십 파트 변경 공문 사본이 철해져 있다.",
+          "무엇과 비교해 봐야 할지 아직은 모르겠다."
+        ]
+      },
+      {
+        "requires": {
+          "any": [
+            {
+              "statements": [
+                "jung_ai_cut"
+              ]
+            },
+            {
+              "statements": [
+                "jung_no_paper"
+              ]
+            },
+            {
+              "statements": [
+                "choi_ai_mismatch"
+              ]
+            }
+          ]
+        },
+        "lines": [
+          "메모 내용과 파일철을 대조해 본다.",
+          "오후 리더십 파트 변경 공문은 있다.",
+          "그런데 오전 AI 파트 단축에 관한 공문은… 어디에도 없다."
+        ],
+        "effects": {
+          "clues": [
+            "cl_ai_no_doc"
+          ]
+        }
+      },
+      {
+        "lines": [
+          "오후 리더십 파트 변경 공문 사본이 있다. 메모 내용과 일치한다.",
+          "오전 파트 쪽 사정도 알아봐야 비교가 될 것 같다."
+        ]
+      }
+    ]
+  },
+  "p_pm_monitor": {
+    "results": [
+      {
+        "lines": [
+          "화면이 잠겨 있다."
+        ]
+      }
+    ]
+  },
+  "p_vendor_laptop": {
+    "results": [
+      {
+        "requires": {
+          "not": {
+            "evidence": [
+              "ev_vendor_mail"
+            ]
+          }
+        },
+        "lines": [
+          "노트북 화면에 보낸 메일함이 열려 있다.",
+          "이과장이 보낸 중간보고 메일이다."
+        ],
+        "effects": {
+          "evidence": [
+            "ev_vendor_mail"
+          ]
+        }
+      },
+      {
+        "lines": [
+          "이미 확인한 메일이다."
+        ]
+      }
+    ]
+  },
+  "p_vendor_report": {
+    "results": [
+      {
+        "lines": [
+          "표지에 큰 글씨로 '만족도 4.3 — 양호'.",
+          "원자료 페이지는 빠져 있다."
+        ]
+      }
+    ]
+  },
+  "p_survey_board": {
+    "results": [
+      {
+        "requires": {
+          "not": {
+            "evidence": [
+              "ev_survey"
+            ]
+          }
+        },
+        "lines": [
+          "설문 게시판에 만족도 조사 결과가 붙어 있다."
+        ],
+        "effects": {
+          "evidence": [
+            "ev_survey"
+          ]
+        }
+      },
+      {
+        "lines": [
+          "이미 확인한 조사표다."
+        ]
+      }
+    ]
+  },
+  "p_survey_pile": {
+    "results": [
+      {
+        "lines": [
+          "회수된 설문지가 흩어져 있다.",
+          "'실습이 너무 짧다', '현장 얘기가 없다'는 문장이 여러 장에서 눈에 띈다."
+        ]
+      }
+    ]
+  },
+  "p_exec_desk": {
+    "results": [
+      {
+        "requires": {
+          "not": {
+            "evidence": [
+              "ev_directive"
+            ]
+          }
+        },
+        "lines": [
+          "책상 위 결재판 사이에 출력된 메일이 끼워져 있다.",
+          "김상무가 박피엠에게 보낸 메일이다."
+        ],
+        "effects": {
+          "evidence": [
+            "ev_directive"
+          ]
+        }
+      },
+      {
+        "lines": [
+          "이미 확인한 메일이다."
+        ]
+      }
+    ]
+  },
+  "p_bookshelf": {
+    "results": [
+      {
+        "lines": [
+          "경영 전략서와 연도별 사업계획서가 빼곡하다."
+        ]
+      }
+    ]
+  }
+}

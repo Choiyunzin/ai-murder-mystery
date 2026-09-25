@@ -1,0 +1,80 @@
+{
+  "jung": {
+    "id": "jung",
+    "name": "정강사",
+    "role": "오전 AI 교육 강사",
+    "color": "#4fa3e0",
+    "room": "MorningClassScene",
+    "look": {
+      "hair": "#3a2a20",
+      "hairStyle": "bob",
+      "skin": "#f2cda8",
+      "accessory": "glasses"
+    }
+  },
+  "jo": {
+    "id": "jo",
+    "name": "조강사",
+    "role": "오후 리더십 교육 강사",
+    "color": "#e0924f",
+    "room": "AfternoonClassScene",
+    "look": {
+      "hair": "#1e1b18",
+      "hairStyle": "short",
+      "skin": "#e9bf98",
+      "accessory": "lanyard"
+    }
+  },
+  "park": {
+    "id": "park",
+    "name": "박피엠",
+    "role": "사내 교육운영 PM",
+    "color": "#8fd16a",
+    "room": "PMSOfficeScene",
+    "look": {
+      "hair": "#2a1f1a",
+      "hairStyle": "long",
+      "skin": "#f4d2b0",
+      "accessory": "lanyard"
+    }
+  },
+  "lee": {
+    "id": "lee",
+    "name": "이과장",
+    "role": "외부 교육대행업체 담당자",
+    "color": "#d16ab8",
+    "room": "VendorRoomScene",
+    "look": {
+      "hair": "#5a3a22",
+      "hairStyle": "side",
+      "skin": "#efc7a0",
+      "accessory": "tie"
+    }
+  },
+  "choi": {
+    "id": "choi",
+    "name": "최본부장",
+    "role": "교육 참가자 대표",
+    "color": "#e0d04f",
+    "room": "LoungeScene",
+    "look": {
+      "hair": "#3b3b3b",
+      "hairStyle": "short",
+      "skin": "#e2b48c",
+      "accessory": "glasses"
+    }
+  },
+  "kim": {
+    "id": "kim",
+    "name": "김상무",
+    "role": "경영기획 담당 임원",
+    "color": "#c94f4f",
+    "room": "ExecutiveOfficeScene",
+    "look": {
+      "hair": "#9a9a9a",
+      "hairStyle": "slick",
+      "skin": "#e8c19c",
+      "accessory": "tie"
+    }
+  }
+}

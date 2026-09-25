@@ -1,0 +1,209 @@
+{
+  "questionPoints": 4,
+  "alert": {
+    "max": 100,
+    "repeatPenalty": 20,
+    "warnAt": 60
+  },
+  "clueRules": [
+    {
+      "clue": "cl_ai_no_doc",
+      "requires": {
+        "evidence": [
+          "ev_memo"
+        ],
+        "statements": [
+          "jung_no_paper"
+        ]
+      }
+    }
+  ],
+  "unlocks": [
+    {
+      "room": "ExecutiveOfficeScene",
+      "requires": {
+        "evidence": [
+          "ev_memo"
+        ],
+        "clues": [
+          "cl_ai_no_doc"
+        ]
+      },
+      "message": "임원실 문이 열렸다. 이제 김상무를 만날 수 있다."
+    }
+  ],
+  "contradictions": {
+    "ct_notice_timing": {
+      "title": "통보 시점 모순",
+      "summary": "박피엠은 \"미리 여유 있게 전달했다\"고 했지만, 조강사는 \"이틀 전에야 통보받았다\"고 했고 예산 조정 메모의 날짜도 교육 D-2였다.",
+      "pieces": [
+        "park_claim_early",
+        "jo_claim_d2",
+        "ev_memo"
+      ]
+    },
+    "ct_satisfaction_data": {
+      "title": "만족도 수치 모순",
+      "summary": "이과장은 만족도가 4.3으로 양호했다고 했지만, 실제 만족도 조사표의 전체 평균은 2.1이었다.",
+      "pieces": [
+        "lee_claim_43",
+        "ev_survey"
+      ]
+    },
+    "ct_false_confession": {
+      "title": "가짜 자백",
+      "summary": "최본부장은 본부 조직문화 점수 때문에 \"다 내 탓\"이라고 했지만, 참가 본부 네 곳 모두, 오전·오후 두 파트 모두 낮은 평가였고 예산·시간 변경이 있었다. 한 본부의 분위기로는 전체 급락을 설명할 수 없다.",
+      "pieces": [
+        "choi_confession",
+        "ev_survey",
+        "ev_memo"
+      ]
+    }
+  },
+  "deduction": {
+    "requires": {
+      "talkedAll": true,
+      "evidenceAll": true,
+      "minContradictions": 2
+    },
+    "maxAttempts": 2,
+    "failMessage": "배후/실행/결과 중 일부 판단이 어긋났습니다.",
+    "stages": {
+      "mastermind": {
+        "question": "누가 예산 재배정을 지시했는가?",
+        "answer": "kim"
+      },
+      "executor": {
+        "question": "누가 그 지시를 실제 운영에 반영했는가?",
+        "answer": "park"
+      },
+      "paths": {
+        "question": "만족도 급락으로 이어진 핵심 결과 경로를 모두 고르시오.",
+        "answers": [
+          "jo_reuse",
+          "jung_rushed"
+        ]
+      }
+    },
+    "pathOptions": [
+      {
+        "id": "jo_reuse",
+        "label": "조강사 → 현장 맞춤 신규 실습 포기, 예전 자료 재사용"
+      },
+      {
+        "id": "jung_rushed",
+        "label": "정강사 → AI 실습 급조, 현장 리더 업무와 동떨어진 기술 위주 실습"
+      },
+      {
+        "id": "lee_inflate",
+        "label": "이과장 → 만족도 데이터 부풀리기"
+      },
+      {
+        "id": "choi_grudge",
+        "label": "최본부장 → 본부 조직문화 문제로 교육 분위기 악화"
+      },
+      {
+        "id": "park_vendor",
+        "label": "박피엠 → 외부업체 선정 실패"
+      }
+    ]
+  },
+  "scoring": {
+    "accuracy": {
+      "mastermind": 20,
+      "executor": 15,
+      "pathCorrect": 5,
+      "pathWrong": -5
+    },
+    "firstTry": 10,
+    "perEvidence": 3,
+    "perContradiction": 5,
+    "efficiency": {
+      "max": 10,
+      "freeQuestions": 12,
+      "perExtraQuestion": 0.5,
+      "perWasted": 2
+    },
+    "alert": {
+      "max": 8,
+      "perGuardedNpc": 4,
+      "perWarnedNpc": 1
+    },
+    "grades": [
+      {
+        "grade": "S",
+        "min": 90
+      },
+      {
+        "grade": "A",
+        "min": 78
+      },
+      {
+        "grade": "B",
+        "min": 64
+      },
+      {
+        "grade": "C",
+        "min": 50
+      },
+      {
+        "grade": "D",
+        "min": 0
+      }
+    ]
+  },
+  "objectives": [
+    {
+      "text": "로비의 문으로 들어가 인물들과 대화해 보자",
+      "done": {
+        "talkedAtLeast": 2
+      }
+    },
+    {
+      "text": "만족도 조사표와 예산 관련 문서를 찾아보자",
+      "done": {
+        "evidence": [
+          "ev_survey",
+          "ev_memo"
+        ]
+      }
+    },
+    {
+      "text": "오전 AI 파트 단축은 어떻게 전달됐을까?",
+      "done": {
+        "clues": [
+          "cl_ai_no_doc"
+        ]
+      }
+    },
+    {
+      "text": "임원실이 열렸다. 김상무의 책상을 살펴보자",
+      "done": {
+        "evidence": [
+          "ev_directive"
+        ]
+      }
+    },
+    {
+      "text": "진술과 증거가 어긋나는 인물에게 증거를 제시하자",
+      "done": {
+        "minContradictions": 2
+      }
+    },
+    {
+      "text": "남은 인물과 대화를 마치고 사건 보고 데스크로",
+      "done": {
+        "talkedAtLeast": 6,
+        "minEvidence": 4
+      }
+    },
+    {
+      "text": "로비의 사건 보고 데스크에서 최종 추론을 하자",
+      "done": {
+        "flags": [
+          "__never__"
+        ]
+      }
+    }
+  ]
+}
