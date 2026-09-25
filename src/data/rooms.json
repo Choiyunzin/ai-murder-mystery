@@ -8,12 +8,13 @@
     },
     "obstacles": [
       {
-        "label": "안내 데스크",
+        "label": "사건 보고 데스크",
         "x": 480,
         "y": 220,
         "w": 180,
         "h": 40,
-        "color": "#5a4a3a"
+        "color": "#5a4a3a",
+        "action": "deduction"
       },
       {
         "label": "화분",

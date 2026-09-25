@@ -5,6 +5,8 @@ import gameState from '../systems/GameState.js';
 import roomData from '../data/rooms.json';
 import characters from '../data/characters.json';
 import { GAME_HEIGHT, WALL_THICKNESS } from '../config/gameConfig.js';
+import { deductionReadiness } from '../systems/ScoringSystem.js';
+import { openNarration } from '../ui/DialogueBox.js';
 
 export default class LobbyScene extends ExploreScene {
   constructor() {
@@ -60,6 +62,21 @@ export default class LobbyScene extends ExploreScene {
     });
 
     return door;
+  }
+
+  onAction(action, label) {
+    if (action !== 'deduction') return;
+    if (gameState.deduction.outcome) {
+      this.goToScene('EndingScene');
+      return;
+    }
+    const { ready, items } = deductionReadiness();
+    if (!ready) {
+      openNarration(label, ['아직 사건을 정리하기엔 이르다.', items.map((i) => `${i.ok ? '✓' : '·'} ${i.label}`).join('\n')]);
+      return;
+    }
+    gameState.lastRoom = null;
+    this.goToScene('DeductionScene');
   }
 
   useDoor(roomKey) {

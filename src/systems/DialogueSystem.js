@@ -70,9 +70,11 @@ export function ask(npcId, topicId) {
   let notices = [];
   if (repeated) {
     lines = tree.repeat;
+    state.wasted = (state.wasted ?? 0) + 1;
     state.alert += (topic.alert ?? 0) + rules.alert.repeatPenalty;
   } else if (wasGuarded && !isPresentation(topic)) {
     lines = tree.evasive;
+    state.wasted = (state.wasted ?? 0) + 1;
   } else {
     lines = topic.lines;
     state.alert += topic.alert ?? 0;

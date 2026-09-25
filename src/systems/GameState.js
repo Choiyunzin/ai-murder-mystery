@@ -26,6 +26,9 @@ class GameState {
     this.contradictions = [];
     // NPC별 대화 상태: { pointsUsed, alert, asked: { topicId: count }, talked }
     this.npcs = {};
+    // 최종 추론: 시도 횟수, 각 시도의 선택, 결과(solved | unsolved | null)
+    this.deduction = { attempts: 0, history: [], outcome: null };
+    this.reflection = '';
     this.applyDebugOverrides();
     this.emit();
   }
@@ -101,7 +104,7 @@ class GameState {
 
   // ── NPC 대화 상태 ──────────────────────
   npc(id) {
-    if (!this.npcs[id]) this.npcs[id] = { pointsUsed: 0, alert: 0, asked: {}, talked: false, greeted: false };
+    if (!this.npcs[id]) this.npcs[id] = { pointsUsed: 0, alert: 0, wasted: 0, asked: {}, talked: false, greeted: false };
     return this.npcs[id];
   }
 
@@ -120,8 +123,19 @@ class GameState {
       clues: [...this.clues],
       statements: [...this.statements],
       contradictions: [...this.contradictions],
-      npcs: JSON.parse(JSON.stringify(this.npcs))
+      npcs: JSON.parse(JSON.stringify(this.npcs)),
+      deduction: JSON.parse(JSON.stringify(this.deduction)),
+      reflection: this.reflection
     };
+  }
+
+  /** 저장된 상태 복원 (SaveSystem) */
+  load(data) {
+    this.reset();
+    for (const key of Object.keys(this.toJSON())) {
+      if (data[key] !== undefined) this[key] = data[key];
+    }
+    this.emit();
   }
 }
 

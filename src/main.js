@@ -8,7 +8,10 @@ import PMSOfficeScene from './scenes/PMSOfficeScene.js';
 import VendorRoomScene from './scenes/VendorRoomScene.js';
 import LoungeScene from './scenes/LoungeScene.js';
 import ExecutiveOfficeScene from './scenes/ExecutiveOfficeScene.js';
+import DeductionScene from './scenes/DeductionScene.js';
+import EndingScene from './scenes/EndingScene.js';
 import { ui } from './ui/UIRoot.js';
+import { SaveSystem } from './systems/SaveSystem.js';
 
 const game = new Phaser.Game({
   type: Phaser.AUTO,
@@ -33,10 +36,13 @@ const game = new Phaser.Game({
     PMSOfficeScene,
     VendorRoomScene,
     LoungeScene,
-    ExecutiveOfficeScene
+    ExecutiveOfficeScene,
+    DeductionScene,
+    EndingScene
   ]
 });
 
 ui.mount(game);
+SaveSystem.enableAutosave();
 
 if (import.meta.env.DEV) window.game = game;

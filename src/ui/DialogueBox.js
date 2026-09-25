@@ -81,9 +81,11 @@ class DialogueBox {
     }
     const line = this.queue.shift();
     this.bodyEl.replaceChildren(
-      this.askedLabel ? h('div', { class: 'dlg-asked' }, `▶ ${this.askedLabel}`) : null,
-      h('div', { class: 'dlg-line' }, line),
-      h('div', { class: 'dlg-next' }, this.queue.length || !this.npcId ? '▼ 계속 (E / Space)' : '')
+      ...[
+        this.askedLabel ? h('div', { class: 'dlg-asked' }, `▶ ${this.askedLabel}`) : null,
+        h('div', { class: 'dlg-line' }, line),
+        h('div', { class: 'dlg-next' }, this.queue.length || !this.npcId ? '▼ 계속 (E / Space)' : '')
+      ].filter(Boolean)
     );
     this.choicesEl.replaceChildren();
     this.choices = [];

@@ -60,7 +60,7 @@ export default class ExploreScene extends Phaser.Scene {
     });
   }
 
-  addObstacle({ x, y, w, h, color, label, interaction }) {
+  addObstacle({ x, y, w, h, color, label, interaction, action }) {
     const rect = this.add
       .rectangle(x, y, w, h, Phaser.Display.Color.HexStringToColor(color).color)
       .setStrokeStyle(interaction ? 2 : 1, interaction ? 0xd9b45a : 0x000000, interaction ? 0.8 : 0.6)
@@ -73,22 +73,26 @@ export default class ExploreScene extends Phaser.Scene {
         .setDepth(3);
     }
     if (interaction) this.addProp(rect, label, interaction);
+    if (action) this.addProp(rect, label, null, () => this.onAction(action, label));
     return rect;
   }
 
+  /** rooms.json 의 action 소품 처리. 필요한 Scene 에서 재정의한다. */
+  onAction() {}
+
   /** 조사 가능한 소품 등록: 근접 + E/Space/클릭 → 내레이션, 증거면 문서 열람 */
-  addProp(rect, label, interactionId) {
+  addProp(rect, label, interactionId, onInteract = null) {
     const target = this.addInteractable({
       x: rect.x,
       y: rect.y,
       bounds: rect.getBounds(),
-      prompt: `[E] 살펴보기: ${label}`,
+      prompt: onInteract ? `[E] ${label}` : `[E] 살펴보기: ${label}`,
       promptX: rect.x,
       promptY: rect.y - rect.height / 2 - 6,
-      onInteract: () => {
+      onInteract: onInteract ?? (() => {
         const { lines, notices } = inspect(interactionId);
         openNarration(label, lines, notices);
-      }
+      })
     });
     rect.setInteractive({ useHandCursor: true }).on('pointerdown', (pointer, lx, ly, event) => {
       event?.stopPropagation();

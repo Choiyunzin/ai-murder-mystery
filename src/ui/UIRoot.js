@@ -30,7 +30,9 @@ class UIRoot {
     game.events.once('ready', sync);
     sync();
 
-    window.addEventListener('keydown', (e) => this.onKey(e));
+    // 캡처 단계에서 받아 Phaser 키 처리보다 먼저 실행되게 한다
+    // (같은 키 입력으로 창이 열리자마자 한 줄 넘어가는 것을 막는다)
+    window.addEventListener('keydown', (e) => this.onKey(e), { capture: true });
   }
 
   sync() {
