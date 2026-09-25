@@ -4,7 +4,9 @@ import Hud from '../ui/Hud.js';
 import gameState from '../systems/GameState.js';
 import roomData from '../data/rooms.json';
 import characters from '../data/characters.json';
-import { GAME_HEIGHT, WALL_THICKNESS } from '../config/gameConfig.js';
+import { GAME_HEIGHT, WALL_THICKNESS, FONT_FAMILY } from '../config/gameConfig.js';
+import { isTouchDevice } from '../ui/TouchControls.js';
+import { audio } from '../systems/AudioSystem.js';
 import { deductionReadiness } from '../systems/ScoringSystem.js';
 import { openNarration } from '../ui/DialogueBox.js';
 
@@ -17,10 +19,22 @@ export default class LobbyScene extends ExploreScene {
     const lobby = roomData.lobby;
     gameState.returnToLobby();
 
-    this.initExplore(lobby);
+    this.initExplore({ ...lobby, music: 'lobby' });
     this.hud = new Hud(this, lobby.name);
 
-    const doors = lobby.doors.map((cfg) => this.createDoor(cfg));
+    this.doors = lobby.doors.map((cfg) => this.createDoor(cfg));
+    const doors = this.doors;
+
+    // 바닥 안내문
+    this.add
+      .text(480, 510, isTouchDevice() ? '조이스틱 이동 · 조사 버튼 상호작용 · 인물 탭: 역할 확인' : 'WASD/방향키 이동 · E/Space 상호작용 · I 수첩 · M 소리 · 인물 클릭: 역할 확인', {
+        fontFamily: FONT_FAMILY,
+        fontSize: '12px',
+        color: '#9a9384'
+      })
+      .setOrigin(0.5)
+      .setAlpha(0.8)
+      .setDepth(-5);
 
     const returnDoor = doors.find((d) => d.target === gameState.lastRoom);
     const spawn = returnDoor ? returnDoor.approach : lobby.playerStart;
@@ -53,7 +67,7 @@ export default class LobbyScene extends ExploreScene {
       prompt: locked ? '[E] 🔒 문 두드리기' : `[E] ${room.name} 입장`,
       promptX: x,
       promptY: isTop ? t + 110 : GAME_HEIGHT - t - 70,
-      onInteract: () => this.useDoor(roomKey)
+      onInteract: () => this.useDoor(roomKey, door)
     });
 
     door.onClick(() => {
@@ -79,13 +93,14 @@ export default class LobbyScene extends ExploreScene {
     this.goToScene('DeductionScene');
   }
 
-  useDoor(roomKey) {
+  useDoor(roomKey, door) {
     const room = roomData.rooms[roomKey];
     if (gameState.isLocked(roomKey)) {
+      audio.sfx('knock');
       this.hud.toast(room.lockedMessage ?? '문이 잠겨 있다.');
       return;
     }
     gameState.enterRoom(roomKey);
-    this.goToScene(roomKey);
+    this.goToScene(roomKey, undefined, door);
   }
 }

@@ -24,6 +24,7 @@ class GameState {
     this.clues = [];
     this.statements = [];
     this.contradictions = [];
+    this.inspected = [];
     // NPC별 대화 상태: { pointsUsed, alert, asked: { topicId: count }, talked }
     this.npcs = {};
     // 최종 추론: 시도 횟수, 각 시도의 선택, 결과(solved | unsolved | null)
@@ -86,7 +87,7 @@ class GameState {
     return this.flags[name];
   }
 
-  /** list 이름('evidence' | 'clues' | 'statements' | 'contradictions')에 id를 추가. 새로 추가됐으면 true. */
+  /** list 이름('evidence' | 'clues' | 'statements' | 'contradictions' | 'inspected')에 id를 추가. 새로 추가됐으면 true. */
   add(list, id) {
     if (this[list].includes(id)) return false;
     this[list].push(id);
@@ -123,6 +124,7 @@ class GameState {
       clues: [...this.clues],
       statements: [...this.statements],
       contradictions: [...this.contradictions],
+      inspected: [...this.inspected],
       npcs: JSON.parse(JSON.stringify(this.npcs)),
       deduction: JSON.parse(JSON.stringify(this.deduction)),
       reflection: this.reflection

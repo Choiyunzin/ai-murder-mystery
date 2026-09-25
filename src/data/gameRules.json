@@ -151,5 +151,59 @@
         "min": 0
       }
     ]
-  }
+  },
+  "objectives": [
+    {
+      "text": "로비의 문으로 들어가 인물들과 대화해 보자",
+      "done": {
+        "talkedAtLeast": 2
+      }
+    },
+    {
+      "text": "만족도 조사표와 예산 관련 문서를 찾아보자",
+      "done": {
+        "evidence": [
+          "ev_survey",
+          "ev_memo"
+        ]
+      }
+    },
+    {
+      "text": "오전 AI 파트 단축은 어떻게 전달됐을까?",
+      "done": {
+        "clues": [
+          "cl_ai_no_doc"
+        ]
+      }
+    },
+    {
+      "text": "임원실이 열렸다. 김상무의 책상을 살펴보자",
+      "done": {
+        "evidence": [
+          "ev_directive"
+        ]
+      }
+    },
+    {
+      "text": "진술과 증거가 어긋나는 인물에게 증거를 제시하자",
+      "done": {
+        "minContradictions": 2
+      }
+    },
+    {
+      "text": "남은 인물과 대화를 마치고 사건 보고 데스크로",
+      "done": {
+        "talkedAtLeast": 6,
+        "minEvidence": 4
+      }
+    },
+    {
+      "text": "로비의 사건 보고 데스크에서 최종 추론을 하자",
+      "done": {
+        "flags": [
+          "__never__"
+        ]
+      }
+    }
+  ]
 }

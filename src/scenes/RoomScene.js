@@ -17,7 +17,7 @@ export default class RoomScene extends ExploreScene {
     const room = roomData.rooms[roomKey];
     const character = characters[room.npc];
 
-    this.initExplore(room);
+    this.initExplore({ ...room, music: room.music ?? 'room' });
     this.hud = new Hud(this, room.name);
 
     // 출입구(하단 중앙) → 로비 복귀
@@ -39,7 +39,7 @@ export default class RoomScene extends ExploreScene {
       prompt: '[E] 로비로 나가기',
       promptX: exitX,
       promptY: GAME_HEIGHT - t - 56,
-      onInteract: () => this.goToScene('LobbyScene')
+      onInteract: () => this.goToScene('LobbyScene', undefined, exit)
     });
     exit.onClick(() => {
       if (this.isInRange(exitTarget)) this.activate(exitTarget);
@@ -58,7 +58,7 @@ export default class RoomScene extends ExploreScene {
       y: this.npc.y,
       prompt: `[E] 대화하기: ${character.name}`,
       promptX: this.npc.x,
-      promptY: this.npc.y + 50,
+      promptY: this.npc.y + 44,
       onInteract: () => openConversation(character.id)
     });
 

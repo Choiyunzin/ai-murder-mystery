@@ -3,6 +3,7 @@ import { openEvidence } from './EvidenceViewer.js';
 import { Registry } from '../systems/Registry.js';
 import gameState from '../systems/GameState.js';
 import * as Dialogue from '../systems/DialogueSystem.js';
+import { audio } from '../systems/AudioSystem.js';
 
 const STATUS_TAG = {
   locked: '잠김',
@@ -43,6 +44,7 @@ class DialogueBox {
       onClose: () => this.onDone?.()
     };
     ui.open(this.modal);
+    audio.sfx('open');
   }
 
   close() {
@@ -80,6 +82,7 @@ class DialogueBox {
       return;
     }
     const line = this.queue.shift();
+    audio.sfx('blip');
     this.bodyEl.replaceChildren(
       ...[
         this.askedLabel ? h('div', { class: 'dlg-asked' }, `▶ ${this.askedLabel}`) : null,
@@ -150,6 +153,7 @@ class DialogueBox {
   }
 
   choose(t) {
+    audio.sfx('select');
     const { lines, notices } = Dialogue.ask(this.npcId, t.topic.id);
     ui.notify(notices);
     this.renderMeta();

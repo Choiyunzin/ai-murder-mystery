@@ -14,7 +14,8 @@
         "w": 180,
         "h": 40,
         "color": "#5a4a3a",
-        "action": "deduction"
+        "action": "deduction",
+        "kind": "reception"
       },
       {
         "label": "화분",
@@ -22,7 +23,8 @@
         "y": 320,
         "w": 40,
         "h": 40,
-        "color": "#3f6b3a"
+        "color": "#3f6b3a",
+        "kind": "plant"
       },
       {
         "label": "화분",
@@ -30,7 +32,8 @@
         "y": 320,
         "w": 40,
         "h": 40,
-        "color": "#3f6b3a"
+        "color": "#3f6b3a",
+        "kind": "plant"
       },
       {
         "label": "소파",
@@ -38,7 +41,8 @@
         "y": 440,
         "w": 160,
         "h": 36,
-        "color": "#4a4f6a"
+        "color": "#4a4f6a",
+        "kind": "sofa"
       }
     ],
     "doors": [
@@ -72,7 +76,8 @@
         "wall": "bottom",
         "x": 760
       }
-    ]
+    ],
+    "floorStyle": "tile"
   },
   "rooms": {
     "MorningClassScene": {
@@ -92,7 +97,8 @@
           "w": 260,
           "h": 20,
           "color": "#e8e8e8",
-          "interaction": "p_morning_board"
+          "interaction": "p_morning_board",
+          "kind": "whiteboard"
         },
         {
           "label": "AI 실습 노트북",
@@ -101,7 +107,8 @@
           "w": 120,
           "h": 50,
           "color": "#555c66",
-          "interaction": "p_ai_laptop"
+          "interaction": "p_ai_laptop",
+          "kind": "laptopDesk"
         },
         {
           "label": "책상",
@@ -109,7 +116,8 @@
           "y": 300,
           "w": 120,
           "h": 50,
-          "color": "#6b5540"
+          "color": "#6b5540",
+          "kind": "desk"
         },
         {
           "label": "교육자료",
@@ -118,9 +126,11 @@
           "w": 70,
           "h": 90,
           "color": "#8a7a5a",
-          "interaction": "p_ai_material"
+          "interaction": "p_ai_material",
+          "kind": "papers"
         }
-      ]
+      ],
+      "floorStyle": "tile"
     },
     "AfternoonClassScene": {
       "name": "오후 리더십 실습실",
@@ -139,7 +149,8 @@
           "w": 300,
           "h": 20,
           "color": "#cfd8e8",
-          "interaction": "p_slides"
+          "interaction": "p_slides",
+          "kind": "screen"
         },
         {
           "label": "화이트보드",
@@ -147,7 +158,8 @@
           "y": 200,
           "w": 20,
           "h": 160,
-          "color": "#e8e8e8"
+          "color": "#e8e8e8",
+          "kind": "whiteboard"
         },
         {
           "label": "실습자료",
@@ -156,7 +168,8 @@
           "w": 140,
           "h": 50,
           "color": "#7a6a4a",
-          "interaction": "p_practice"
+          "interaction": "p_practice",
+          "kind": "papersTable"
         },
         {
           "label": "책상",
@@ -164,9 +177,11 @@
           "y": 320,
           "w": 140,
           "h": 50,
-          "color": "#6b5540"
+          "color": "#6b5540",
+          "kind": "desk"
         }
-      ]
+      ],
+      "floorStyle": "wood"
     },
     "PMSOfficeScene": {
       "name": "PM 사무실",
@@ -184,7 +199,8 @@
           "y": 170,
           "w": 200,
           "h": 50,
-          "color": "#6b5540"
+          "color": "#6b5540",
+          "kind": "desk"
         },
         {
           "label": "모니터",
@@ -193,7 +209,8 @@
           "w": 70,
           "h": 16,
           "color": "#222831",
-          "interaction": "p_pm_monitor"
+          "interaction": "p_pm_monitor",
+          "kind": "monitor"
         },
         {
           "label": "파일철",
@@ -202,7 +219,8 @@
           "w": 60,
           "h": 140,
           "color": "#7a6a4a",
-          "interaction": "p_files"
+          "interaction": "p_files",
+          "kind": "files"
         },
         {
           "label": "서랍",
@@ -211,9 +229,11 @@
           "w": 80,
           "h": 60,
           "color": "#5a4a3a",
-          "interaction": "p_drawer"
+          "interaction": "p_drawer",
+          "kind": "cabinet"
         }
-      ]
+      ],
+      "floorStyle": "carpet"
     },
     "VendorRoomScene": {
       "name": "외부업체 미팅룸",
@@ -231,7 +251,8 @@
           "y": 280,
           "w": 320,
           "h": 90,
-          "color": "#6b5540"
+          "color": "#6b5540",
+          "kind": "table"
         },
         {
           "label": "노트북",
@@ -240,7 +261,8 @@
           "w": 60,
           "h": 30,
           "color": "#555c66",
-          "interaction": "p_vendor_laptop"
+          "interaction": "p_vendor_laptop",
+          "kind": "laptop"
         },
         {
           "label": "외부업체 보고서",
@@ -249,9 +271,11 @@
           "w": 70,
           "h": 90,
           "color": "#8a7a5a",
-          "interaction": "p_vendor_report"
+          "interaction": "p_vendor_report",
+          "kind": "papers"
         }
-      ]
+      ],
+      "floorStyle": "carpet"
     },
     "LoungeScene": {
       "name": "참가자 라운지",
@@ -269,7 +293,8 @@
           "y": 250,
           "w": 60,
           "h": 180,
-          "color": "#4a4f6a"
+          "color": "#4a4f6a",
+          "kind": "sofa"
         },
         {
           "label": "소파",
@@ -277,7 +302,8 @@
           "y": 250,
           "w": 60,
           "h": 180,
-          "color": "#4a4f6a"
+          "color": "#4a4f6a",
+          "kind": "sofa"
         },
         {
           "label": "설문 게시판",
@@ -286,7 +312,8 @@
           "w": 220,
           "h": 20,
           "color": "#c8b88a",
-          "interaction": "p_survey_board"
+          "interaction": "p_survey_board",
+          "kind": "corkboard"
         },
         {
           "label": "설문지 더미",
@@ -295,9 +322,11 @@
           "w": 100,
           "h": 40,
           "color": "#e8e0c8",
-          "interaction": "p_survey_pile"
+          "interaction": "p_survey_pile",
+          "kind": "papersTable"
         }
-      ]
+      ],
+      "floorStyle": "wood"
     },
     "ExecutiveOfficeScene": {
       "name": "임원실",
@@ -317,7 +346,8 @@
           "w": 260,
           "h": 60,
           "color": "#4a3020",
-          "interaction": "p_exec_desk"
+          "interaction": "p_exec_desk",
+          "kind": "execDesk"
         },
         {
           "label": "책장",
@@ -326,7 +356,8 @@
           "w": 60,
           "h": 200,
           "color": "#5a4030",
-          "interaction": "p_bookshelf"
+          "interaction": "p_bookshelf",
+          "kind": "bookshelf"
         },
         {
           "label": "응접 소파",
@@ -334,9 +365,12 @@
           "y": 330,
           "w": 120,
           "h": 50,
-          "color": "#4a4f6a"
+          "color": "#4a4f6a",
+          "kind": "sofa"
         }
-      ]
+      ],
+      "floorStyle": "carpet",
+      "music": "exec"
     }
   }
 }

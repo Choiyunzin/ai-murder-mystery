@@ -190,3 +190,42 @@ button.nb-item:hover, button.nb-item:focus-visible { border-color: var(--accent)
 .row { display: flex; gap: 0.6em; align-items: center; flex-wrap: wrap; }
 .saved { color: var(--good); font-size: 0.82em; }
 @media (prefers-reduced-motion: reduce) { .stamp { animation: none; } }
+
+/* ── 모바일 터치 컨트롤 ─────────────────── */
+.touch { position: absolute; inset: auto 0 0 0; height: 40%; pointer-events: none; }
+#ui-root.modal-open .touch, #ui-root.no-touch .touch { display: none; }
+.joy-base {
+  position: absolute; left: 3%; bottom: 6%; width: 9em; height: 9em; border-radius: 50%;
+  background: rgba(20, 22, 28, 0.45); border: 2px solid rgba(217, 180, 90, 0.5);
+  pointer-events: auto; touch-action: none; display: grid; place-items: center;
+}
+.joy-knob { width: 45%; height: 45%; border-radius: 50%; background: rgba(217, 180, 90, 0.75); pointer-events: none; }
+.touch-buttons { position: absolute; right: 3%; bottom: 7%; display: flex; gap: 0.8em; align-items: flex-end; pointer-events: auto; }
+.touch-btn {
+  width: 5.2em; height: 5.2em; border-radius: 50%; border: 2px solid var(--accent);
+  background: rgba(217, 180, 90, 0.85); color: #17140c; font-weight: 700; font-size: 1em; touch-action: none;
+}
+.touch-btn.small { width: 4.2em; height: 4.2em; font-size: 0.8em; white-space: nowrap; background: rgba(20, 22, 28, 0.7); color: var(--ink); }
+
+/* ── 음소거 버튼 ────────────────────────── */
+.mute {
+  position: absolute; top: 0; right: 0; height: 5.88%; aspect-ratio: 1; pointer-events: auto;
+  background: none; border: none; cursor: pointer; display: grid; place-items: center; color: var(--ink); padding: 0.35em;
+}
+.mute svg { width: 100%; height: 100%; }
+.mute:focus-visible { outline: 2px solid var(--accent); }
+
+/* ── 타이틀 메뉴 ─────────────────────────── */
+.menu { inset: 0; display: grid; place-items: center; padding: 4% 6%; }
+.menu-card { width: min(38em, 100%); display: grid; gap: 1.1em; }
+.menu-case { color: var(--accent); letter-spacing: 0.3em; font-size: 0.8em; }
+.menu-title { font-size: 2.6em; font-weight: 800; letter-spacing: 0.06em; margin: 0; line-height: 1.1; }
+.menu-sub { font-size: 1.1em; margin: 0; color: var(--ink); }
+.menu-drop { display: flex; align-items: baseline; gap: 0.6em; font-variant-numeric: tabular-nums; }
+.menu-drop .from { color: var(--muted); font-size: 1.3em; text-decoration: line-through; }
+.menu-drop .to { color: var(--bad); font-size: 2.2em; font-weight: 800; }
+.menu-drop .unit { color: var(--muted); font-size: 0.8em; }
+.menu-brief { margin: 0; color: var(--muted); line-height: 1.7; font-size: 0.88em; }
+.menu-actions { display: flex; gap: 0.7em; flex-wrap: wrap; }
+.menu-help { color: var(--muted); font-size: 0.76em; line-height: 1.7; border-top: 1px solid var(--line); padding-top: 0.8em; }
+.menu-help b { color: var(--ink); font-weight: 600; }

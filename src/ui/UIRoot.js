@@ -1,5 +1,6 @@
 import './ui.css';
 import { GAME_WIDTH } from '../config/gameConfig.js';
+import { audio } from '../systems/AudioSystem.js';
 
 // 모달이 키 입력으로 닫힌 직후 같은 키가 Phaser 쪽 상호작용을 다시 발동하지 않도록 두는 유예 시간
 const CLOSE_GRACE_MS = 200;
@@ -13,6 +14,7 @@ class UIRoot {
     this.stack = [];
     this.lastClosedAt = 0;
     this.hotkeys = {};
+    this.actionHandler = null;
   }
 
   mount(game) {
@@ -21,8 +23,13 @@ class UIRoot {
     this.el.id = 'ui-root';
     this.toasts = document.createElement('div');
     this.toasts.className = 'toasts';
-    this.el.append(this.toasts);
+    this.el.append(this.toasts, this.makeMuteButton());
     document.body.append(this.el);
+
+    // 브라우저 정책: 첫 사용자 입력에서 오디오를 연다
+    const unlock = () => audio.unlock();
+    window.addEventListener('pointerdown', unlock, { capture: true });
+    window.addEventListener('keydown', unlock, { capture: true });
 
     const sync = () => requestAnimationFrame(() => this.sync());
     game.scale.on('resize', sync);
@@ -35,6 +42,34 @@ class UIRoot {
     window.addEventListener('keydown', (e) => this.onKey(e), { capture: true });
   }
 
+  makeMuteButton() {
+    const on = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg>';
+    const off = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M17 9l5 6M22 9l-5 6"/></svg>';
+    const btn = document.createElement('button');
+    btn.className = 'mute';
+    const render = (muted) => {
+      btn.innerHTML = muted ? off : on;
+      btn.setAttribute('aria-label', muted ? '소리 켜기' : '소리 끄기');
+      btn.title = muted ? '소리 켜기 (M)' : '소리 끄기 (M)';
+    };
+    render(audio.muted);
+    audio.onChange(render);
+    btn.addEventListener('click', () => {
+      btn.blur();
+      audio.toggleMute();
+    });
+    return btn;
+  }
+
+  /** 조사/대화 버튼(모바일)이 호출할 현재 Scene 의 상호작용 */
+  setActionHandler(fn) {
+    this.actionHandler = fn;
+  }
+
+  action() {
+    if (!this.isBlocking()) this.actionHandler?.();
+  }
+
   sync() {
     const canvas = this.game?.canvas;
     if (!canvas) return;
@@ -45,6 +80,10 @@ class UIRoot {
 
   onKey(e) {
     const top = this.stack[this.stack.length - 1];
+    if (e.key.toLowerCase() === 'm' && !(e.target instanceof HTMLTextAreaElement) && !e.repeat) {
+      audio.toggleMute();
+      return;
+    }
     if (top) {
       if (top.onKey?.(e)) e.preventDefault();
       return;
@@ -65,6 +104,7 @@ class UIRoot {
   open(modal) {
     this.stack.push(modal);
     this.el.append(modal.el);
+    this.el.classList.add('modal-open');
     return modal;
   }
 
@@ -74,6 +114,7 @@ class UIRoot {
     this.stack.splice(i, 1);
     modal.el.remove();
     this.lastClosedAt = performance.now();
+    this.el.classList.toggle('modal-open', this.stack.length > 0);
     modal.onClose?.();
   }
 
@@ -101,6 +142,9 @@ class UIRoot {
   notify(notices) {
     // 같은 문구(예: 한 번에 여러 진술 기록)는 한 번만 띄운다
     notices = notices.filter((n, i) => notices.findIndex((m) => m.text === n.text) === i);
+    const SFX = { evidence: 'evidence', clue: 'clue', contradiction: 'contradiction', unlock: 'unlock', warning: 'warning' };
+    const loudest = ['contradiction', 'unlock', 'evidence', 'warning', 'clue'].find((t) => notices.some((n) => n.type === t));
+    if (loudest) audio.sfx(SFX[loudest]);
     notices.forEach((n, i) => setTimeout(() => this.toast(n.text, n.type, n.type === 'statement' ? 1800 : 3200), i * 120));
   }
 }

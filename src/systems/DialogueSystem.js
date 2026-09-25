@@ -61,6 +61,7 @@ export function ask(npcId, topicId) {
   const state = gameState.npc(npcId);
   const repeated = (state.asked[topicId] ?? 0) > 0;
   const wasGuarded = isGuarded(npcId);
+  const wasWarned = state.alert >= rules.alert.warnAt;
 
   state.pointsUsed += costOf(topic);
   state.asked[topicId] = (state.asked[topicId] ?? 0) + 1;
@@ -82,6 +83,9 @@ export function ask(npcId, topicId) {
   }
   state.alert = Math.min(state.alert, rules.alert.max);
 
+  if (!wasWarned && state.alert >= rules.alert.warnAt && !isGuarded(npcId)) {
+    notices.push({ type: 'warning', text: `${Registry.characters[npcId].name}이(가) 경계하기 시작했다.` });
+  }
   if (!wasGuarded && isGuarded(npcId)) {
     notices.push({ type: 'warning', text: `${Registry.characters[npcId].name}의 경계가 최고조다. 이제 대부분 회피한다.` });
   }

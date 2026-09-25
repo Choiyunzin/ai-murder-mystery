@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { GAME_WIDTH, CANVAS_HEIGHT } from './config/gameConfig.js';
 import BootScene from './scenes/BootScene.js';
+import MenuScene from './scenes/MenuScene.js';
 import LobbyScene from './scenes/LobbyScene.js';
 import MorningClassScene from './scenes/MorningClassScene.js';
 import AfternoonClassScene from './scenes/AfternoonClassScene.js';
@@ -12,6 +13,7 @@ import DeductionScene from './scenes/DeductionScene.js';
 import EndingScene from './scenes/EndingScene.js';
 import { ui } from './ui/UIRoot.js';
 import { SaveSystem } from './systems/SaveSystem.js';
+import { isTouchDevice, mountTouchControls } from './ui/TouchControls.js';
 
 const game = new Phaser.Game({
   type: Phaser.AUTO,
@@ -30,6 +32,7 @@ const game = new Phaser.Game({
   },
   scene: [
     BootScene,
+    MenuScene,
     LobbyScene,
     MorningClassScene,
     AfternoonClassScene,
@@ -44,5 +47,14 @@ const game = new Phaser.Game({
 
 ui.mount(game);
 SaveSystem.enableAutosave();
+
+if (isTouchDevice()) {
+  mountTouchControls({
+    onAction: () => ui.action(),
+    onNotebook: () => !ui.isOpen() && ui.hotkeys.i?.()
+  });
+} else {
+  ui.el.classList.add('no-touch');
+}
 
 if (import.meta.env.DEV) window.game = game;

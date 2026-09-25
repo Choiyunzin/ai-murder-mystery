@@ -4,6 +4,7 @@ import gameState from './GameState.js';
  * 데이터 파일의 requires 조건을 평가한다.
  * { evidence, clues, statements, contradictions, flags } 는 모두 보유해야 하고,
  * any: [조건...] 는 하나 이상 충족, not: 조건 은 충족하지 않아야 한다.
+ * talkedAtLeast / minContradictions / minEvidence 는 개수 조건이다.
  */
 export function meets(req, state = gameState) {
   if (!req) return true;
@@ -14,6 +15,9 @@ export function meets(req, state = gameState) {
     all(req.statements, (id) => state.has('statements', id)) &&
     all(req.contradictions, (id) => state.has('contradictions', id)) &&
     all(req.flags, (id) => !!state.flags[id]) &&
+    (req.talkedAtLeast == null || state.talkedCount() >= req.talkedAtLeast) &&
+    (req.minContradictions == null || state.contradictions.length >= req.minContradictions) &&
+    (req.minEvidence == null || state.evidence.length >= req.minEvidence) &&
     (!req.any || req.any.some((r) => meets(r, state))) &&
     (!req.not || !meets(req.not, state))
   );
