@@ -1,0 +1,45 @@
+{
+  "npc": "kim",
+  "greeting": { "lines": ["경영기획 김상무일세.", "바쁘니 용건만 말하게."] },
+  "returnGreeting": ["또 자네인가."],
+  "evasive": ["이 이상은 할 말 없네. 나가 보게."],
+  "repeat": ["같은 얘기를 몇 번이나 해야 하나."],
+  "statements": {
+    "kim_company": "하반기 예산 재배정은 회사 전체 상황을 고려한 결정이다.",
+    "kim_blame_park": "일정 관리는 PM 책임이다. 박피엠의 관리 부실이다.",
+    "kim_admit": "해당 교육 예산 축소를 지시한 것은 김상무 본인이다.",
+    "kim_verbal": "AI 파트는 보고가 복잡해질까 봐 공문 없이 구두로 처리하라고 지시했다."
+  },
+  "topics": [
+    {
+      "id": "budget", "label": "교육 예산에 대해", "alert": 0,
+      "lines": ["하반기 예산 재배정은 회사 전체 상황을 고려한 거네.", "교육만 특별 대우할 수는 없지."],
+      "effects": { "statements": ["kim_company"] }
+    },
+    {
+      "id": "park", "label": "박피엠에 대해", "alert": 5,
+      "lines": ["실무 운영은 PM 책임이지.", "일정을 그렇게 관리한 건 박피엠 관리 부실이야."],
+      "effects": { "statements": ["kim_blame_park"] }
+    },
+    {
+      "id": "result", "label": "만족도 급락에 대해", "alert": 0,
+      "lines": ["결과는 유감이네만.", "운영 디테일까지 내가 챙길 수는 없지 않나."]
+    },
+    {
+      "id": "accuse", "label": "상무님이 예산 축소를 지시하신 것 아닙니까?", "alert": 25,
+      "lines": ["근거 없는 추측은 곤란하네.", "말조심하게."]
+    },
+    {
+      "id": "directive", "label": "[지시 메일 제시] 이 메일, 상무님이 보내신 거죠?", "cost": 0, "once": true,
+      "requires": { "evidence": ["ev_directive"] }, "lockedLabel": "🔒 ??? (결정적 증거가 필요하다)",
+      "lines": ["…그 메일을 어디서 봤나.", "그래. 해당 교육 예산을 줄이라고 지시한 건 나일세.", "하반기 재배정 방침이었지. 세부 조정까지 내가 한 건 아니네."],
+      "effects": { "statements": ["kim_admit"] }
+    },
+    {
+      "id": "verbal", "label": "[추궁] AI 파트는 왜 문서 없이 지시하셨습니까?", "cost": 0, "once": true,
+      "requires": { "statements": ["kim_admit"], "clues": ["cl_ai_no_doc"] }, "lockedLabel": "🔒 ??? (먼저 인정을 받아내야 한다)",
+      "lines": ["…AI 파트까지 공식적으로 줄이면 보고가 복잡해지니 말로 처리하라고 했네.", "결과가 이렇게 될 줄은 몰랐어."],
+      "effects": { "statements": ["kim_verbal"] }
+    }
+  ]
+}

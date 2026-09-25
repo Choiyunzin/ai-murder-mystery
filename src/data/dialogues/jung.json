@@ -1,0 +1,39 @@
+{
+  "npc": "jung",
+  "greeting": { "lines": ["아, 안녕하세요… 오전 AI 실습 맡았던 정강사입니다.", "결과는… 보셨죠."] },
+  "returnGreeting": ["또 오셨네요. 뭐든 물어보세요."],
+  "evasive": ["…죄송해요. 지금은 더 말씀드리기 어려울 것 같아요."],
+  "repeat": ["그건 아까 말씀드렸잖아요…"],
+  "statements": {
+    "jung_ai_cut": "AI 실습 시간도 교육 직전에 줄었다. 박피엠이 전화로 알려 줬다.",
+    "jung_template": "사업부장급 사례를 준비할 시간이 없어 범용 기술 템플릿을 급히 손봐 썼다.",
+    "jung_no_paper": "AI 파트 단축은 공문 없이 전화로만 전달받았다."
+  },
+  "topics": [
+    {
+      "id": "prep", "label": "준비 과정에 대해", "alert": 0,
+      "lines": ["원래는 사업부장님들 실제 업무에 맞춘 사례를 준비하려고 했어요.", "그런데 교육 직전에 실습 시간이 줄었다는 연락을 받았어요. 박피엠님이 전화로요."],
+      "effects": { "statements": ["jung_ai_cut"] }
+    },
+    {
+      "id": "material", "label": "실습 내용에 대해", "alert": 0,
+      "lines": ["결국 예전에 쓰던 범용 기술 템플릿을 급하게 손봐서 썼습니다.", "코드 자동완성, 프롬프트 문법… 사업부장님들께는 너무 기술 위주였죠."],
+      "effects": { "statements": ["jung_template"] }
+    },
+    {
+      "id": "notice", "label": "통보 시점에 대해", "alert": 5,
+      "lines": ["정확히는… 교육 이틀 전쯤이었을 거예요.", "공문 같은 건 따로 못 받았어요. 전화 한 통이 전부였죠."],
+      "effects": { "statements": ["jung_ai_cut", "jung_no_paper"] }
+    },
+    {
+      "id": "blame", "label": "솔직히 준비가 부족했던 것 아닙니까?", "alert": 15,
+      "lines": ["…그렇게 보이셨다면 할 말은 없어요.", "하지만 시간만 있었으면 이렇게 되진 않았을 거예요."]
+    },
+    {
+      "id": "compare", "label": "다른 사람의 진술과 비교", "alert": 5,
+      "requires": { "statements": ["jo_claim_d2"] }, "lockedLabel": "다른 사람의 진술과 비교 (비교할 진술이 없다)",
+      "lines": ["조강사님도 이틀 전에 들으셨다고요?", "…저만 그런 게 아니었군요. 오전이든 오후든 똑같이 급했던 거네요."],
+      "effects": { "statements": ["jung_ai_cut"] }
+    }
+  ]
+}

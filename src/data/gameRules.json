@@ -1,0 +1,38 @@
+{
+  "questionPoints": 4,
+  "alert": {
+    "max": 100,
+    "repeatPenalty": 20,
+    "warnAt": 60
+  },
+  "clueRules": [
+    {
+      "clue": "cl_ai_no_doc",
+      "requires": { "evidence": ["ev_memo"], "statements": ["jung_no_paper"] }
+    }
+  ],
+  "unlocks": [
+    {
+      "room": "ExecutiveOfficeScene",
+      "requires": { "evidence": ["ev_memo"], "clues": ["cl_ai_no_doc"] },
+      "message": "임원실 문이 열렸다. 이제 김상무를 만날 수 있다."
+    }
+  ],
+  "contradictions": {
+    "ct_notice_timing": {
+      "title": "통보 시점 모순",
+      "summary": "박피엠은 \"미리 여유 있게 전달했다\"고 했지만, 조강사는 \"이틀 전에야 통보받았다\"고 했고 예산 조정 메모의 날짜도 교육 D-2였다.",
+      "pieces": ["park_claim_early", "jo_claim_d2", "ev_memo"]
+    },
+    "ct_satisfaction_data": {
+      "title": "만족도 수치 모순",
+      "summary": "이과장은 만족도가 4.3으로 양호했다고 했지만, 실제 만족도 조사표의 전체 평균은 2.1이었다.",
+      "pieces": ["lee_claim_43", "ev_survey"]
+    },
+    "ct_false_confession": {
+      "title": "가짜 자백",
+      "summary": "최본부장은 \"다 저 때문\"이라고 했지만, 오전·오후 두 파트 모두 낮은 평가를 받았고 예산·시간 변경이 있었다. 개인 불만만으로는 전체 급락을 설명할 수 없다.",
+      "pieces": ["choi_confession", "ev_survey", "ev_memo"]
+    }
+  }
+}

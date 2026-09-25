@@ -8,6 +8,7 @@ import PMSOfficeScene from './scenes/PMSOfficeScene.js';
 import VendorRoomScene from './scenes/VendorRoomScene.js';
 import LoungeScene from './scenes/LoungeScene.js';
 import ExecutiveOfficeScene from './scenes/ExecutiveOfficeScene.js';
+import { ui } from './ui/UIRoot.js';
 
 const game = new Phaser.Game({
   type: Phaser.AUTO,
@@ -35,5 +36,7 @@ const game = new Phaser.Game({
     ExecutiveOfficeScene
   ]
 });
+
+ui.mount(game);
 
 if (import.meta.env.DEV) window.game = game;

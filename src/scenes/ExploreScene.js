@@ -3,6 +3,13 @@ import { GAME_WIDTH, GAME_HEIGHT, WALL_THICKNESS, INTERACT_DISTANCE, FADE_MS, FO
 import Player from '../entities/Player.js';
 import InteractionPrompt from '../ui/InteractionPrompt.js';
 import RoleBadge from '../ui/RoleBadge.js';
+import { ui } from '../ui/UIRoot.js';
+import { toggleNotebook } from '../ui/InventoryPanel.js';
+import { openNarration } from '../ui/DialogueBox.js';
+import { inspect } from '../systems/EvidenceSystem.js';
+
+// 소품은 크기가 제각각이라 중심점이 아닌 가장자리까지의 거리로 판정한다
+const PROP_DISTANCE = 44;
 
 /**
  * 로비와 각 방이 공유하는 탐색 Scene 베이스.
@@ -15,6 +22,10 @@ export default class ExploreScene extends Phaser.Scene {
   initExplore({ floorColor, obstacles = [] }) {
     this.transitioning = false;
     this.interactables = [];
+    ui.closeAll();
+    ui.setHotkey('i', () => {
+      if (!this.transitioning) toggleNotebook();
+    });
 
     this.cameras.main.setBackgroundColor(floorColor);
     // 월드 좌표(0,0)가 HUD 띠 바로 아래에 오도록 카메라를 올린다
@@ -49,8 +60,11 @@ export default class ExploreScene extends Phaser.Scene {
     });
   }
 
-  addObstacle({ x, y, w, h, color, label }) {
-    const rect = this.add.rectangle(x, y, w, h, Phaser.Display.Color.HexStringToColor(color).color).setStrokeStyle(1, 0x000000, 0.6).setDepth(3);
+  addObstacle({ x, y, w, h, color, label, interaction }) {
+    const rect = this.add
+      .rectangle(x, y, w, h, Phaser.Display.Color.HexStringToColor(color).color)
+      .setStrokeStyle(interaction ? 2 : 1, interaction ? 0xd9b45a : 0x000000, interaction ? 0.8 : 0.6)
+      .setDepth(3);
     this.walls.add(rect);
     if (label) {
       this.add
@@ -58,7 +72,29 @@ export default class ExploreScene extends Phaser.Scene {
         .setOrigin(0.5)
         .setDepth(3);
     }
+    if (interaction) this.addProp(rect, label, interaction);
     return rect;
+  }
+
+  /** 조사 가능한 소품 등록: 근접 + E/Space/클릭 → 내레이션, 증거면 문서 열람 */
+  addProp(rect, label, interactionId) {
+    const target = this.addInteractable({
+      x: rect.x,
+      y: rect.y,
+      bounds: rect.getBounds(),
+      prompt: `[E] 살펴보기: ${label}`,
+      promptX: rect.x,
+      promptY: rect.y - rect.height / 2 - 6,
+      onInteract: () => {
+        const { lines, notices } = inspect(interactionId);
+        openNarration(label, lines, notices);
+      }
+    });
+    rect.setInteractive({ useHandCursor: true }).on('pointerdown', (pointer, lx, ly, event) => {
+      event?.stopPropagation();
+      if (this.isInRange(target)) this.activate(target);
+      else if (!ui.isBlocking()) ui.toast(`${label}에 더 가까이 다가가세요.`);
+    });
   }
 
   spawnPlayer(x, y) {
@@ -69,7 +105,7 @@ export default class ExploreScene extends Phaser.Scene {
 
   /**
    * 상호작용 대상 등록.
-   * target: { x, y, prompt, promptX, promptY, onInteract }
+   * target: { x, y, bounds?, prompt, promptX, promptY, onInteract }
    */
   addInteractable(target) {
     this.interactables.push(target);
@@ -79,15 +115,26 @@ export default class ExploreScene extends Phaser.Scene {
   findNearestInteractable() {
     if (!this.player) return null;
     let best = null;
-    let bestDist = INTERACT_DISTANCE;
+    let bestScore = Infinity;
     for (const target of this.interactables) {
-      const d = Phaser.Math.Distance.Between(this.player.x, this.player.y, target.x, target.y);
-      if (d <= bestDist) {
+      const d = this.distanceTo(target);
+      const range = target.bounds ? PROP_DISTANCE : INTERACT_DISTANCE;
+      // 범위 대비 비율로 비교해 소품과 NPC/문 중 더 가까운 쪽을 고른다
+      if (d <= range && d / range < bestScore) {
         best = target;
-        bestDist = d;
+        bestScore = d / range;
       }
     }
     return best;
+  }
+
+  distanceTo(target) {
+    const { x, y } = this.player;
+    const b = target.bounds;
+    if (!b) return Phaser.Math.Distance.Between(x, y, target.x, target.y);
+    const dx = Math.max(b.left - x, 0, x - b.right);
+    const dy = Math.max(b.top - y, 0, y - b.bottom);
+    return Math.hypot(dx, dy);
   }
 
   isInRange(target) {
@@ -95,12 +142,13 @@ export default class ExploreScene extends Phaser.Scene {
   }
 
   tryInteract() {
+    if (ui.isBlocking()) return;
     const target = this.findNearestInteractable();
     if (target) this.activate(target);
   }
 
   activate(target) {
-    if (this.transitioning) return;
+    if (this.transitioning || ui.isBlocking()) return;
     target.onInteract();
   }
 
@@ -119,6 +167,11 @@ export default class ExploreScene extends Phaser.Scene {
 
   update() {
     if (this.transitioning) return;
+    if (ui.isBlocking()) {
+      this.player?.setVelocity(0, 0);
+      this.prompt.hide();
+      return;
+    }
     this.player?.update();
     const target = this.findNearestInteractable();
     if (target) this.prompt.show(target);

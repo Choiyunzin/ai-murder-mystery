@@ -2,6 +2,7 @@ import ExploreScene from './ExploreScene.js';
 import Door from '../entities/Door.js';
 import NPC from '../entities/NPC.js';
 import Hud from '../ui/Hud.js';
+import { openConversation } from '../ui/DialogueBox.js';
 import gameState from '../systems/GameState.js';
 import roomData from '../data/rooms.json';
 import characters from '../data/characters.json';
@@ -51,6 +52,15 @@ export default class RoomScene extends ExploreScene {
       onClick: (npc) => this.showRoleBadge(npc)
     });
     this.physics.add.collider(this.player, this.npc);
+    // 대화는 근접 + E/Space 또는 프롬프트(대화 버튼) 클릭으로만 시작한다. NPC 클릭은 역할 배지.
+    this.addInteractable({
+      x: this.npc.x,
+      y: this.npc.y,
+      prompt: `[E] 대화하기: ${character.name}`,
+      promptX: this.npc.x,
+      promptY: this.npc.y + 50,
+      onInteract: () => openConversation(character.id)
+    });
 
     gameState.enterRoom(roomKey);
   }
