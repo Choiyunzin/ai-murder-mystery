@@ -11,6 +11,13 @@ npm run dev      # http://localhost:5173
 npm run build    # dist/ 로 빌드
 ```
 
+## 온라인에서 플레이
+
+https://choiyunzin.github.io/ai-murder-mystery/
+
+`main` 브랜치에 푸시하면 GitHub Actions(`.github/workflows/deploy-pages.yml`)가 빌드해 GitHub Pages 로 배포한다.
+처음 한 번은 저장소 **Settings → Pages → Source** 를 **GitHub Actions** 로 설정해야 한다.
+
 ## 조작
 
 | | 데스크톱 | 모바일 |
