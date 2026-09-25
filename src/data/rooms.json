@@ -1,0 +1,100 @@
+{
+  "lobby": {
+    "name": "로비",
+    "floorColor": "#2b2f3a",
+    "playerStart": { "x": 480, "y": 330 },
+    "obstacles": [
+      { "label": "안내 데스크", "x": 480, "y": 220, "w": 180, "h": 40, "color": "#5a4a3a" },
+      { "label": "화분", "x": 180, "y": 320, "w": 40, "h": 40, "color": "#3f6b3a" },
+      { "label": "화분", "x": 780, "y": 320, "w": 40, "h": 40, "color": "#3f6b3a" },
+      { "label": "소파", "x": 480, "y": 440, "w": 160, "h": 36, "color": "#4a4f6a" }
+    ],
+    "doors": [
+      { "room": "MorningClassScene",    "wall": "top",    "x": 200 },
+      { "room": "AfternoonClassScene",  "wall": "top",    "x": 480 },
+      { "room": "PMSOfficeScene",       "wall": "top",    "x": 760 },
+      { "room": "VendorRoomScene",      "wall": "bottom", "x": 200 },
+      { "room": "LoungeScene",          "wall": "bottom", "x": 480 },
+      { "room": "ExecutiveOfficeScene", "wall": "bottom", "x": 760 }
+    ]
+  },
+  "rooms": {
+    "MorningClassScene": {
+      "name": "오전 AI 실습실",
+      "npc": "jung",
+      "initiallyLocked": false,
+      "floorColor": "#23303d",
+      "npcPos": { "x": 480, "y": 170 },
+      "obstacles": [
+        { "label": "화이트보드", "x": 480, "y": 60, "w": 260, "h": 20, "color": "#e8e8e8" },
+        { "label": "AI 실습 노트북", "x": 300, "y": 300, "w": 120, "h": 50, "color": "#555c66" },
+        { "label": "책상", "x": 660, "y": 300, "w": 120, "h": 50, "color": "#6b5540" },
+        { "label": "교육자료", "x": 160, "y": 180, "w": 70, "h": 90, "color": "#8a7a5a" }
+      ]
+    },
+    "AfternoonClassScene": {
+      "name": "오후 리더십 실습실",
+      "npc": "jo",
+      "initiallyLocked": false,
+      "floorColor": "#3a2f25",
+      "npcPos": { "x": 480, "y": 170 },
+      "obstacles": [
+        { "label": "리더십 교육 슬라이드", "x": 480, "y": 60, "w": 300, "h": 20, "color": "#cfd8e8" },
+        { "label": "화이트보드", "x": 820, "y": 200, "w": 20, "h": 160, "color": "#e8e8e8" },
+        { "label": "실습자료", "x": 300, "y": 320, "w": 140, "h": 50, "color": "#7a6a4a" },
+        { "label": "책상", "x": 640, "y": 320, "w": 140, "h": 50, "color": "#6b5540" }
+      ]
+    },
+    "PMSOfficeScene": {
+      "name": "PM 사무실",
+      "npc": "park",
+      "initiallyLocked": false,
+      "floorColor": "#2c3a2c",
+      "npcPos": { "x": 480, "y": 250 },
+      "obstacles": [
+        { "label": "책상", "x": 480, "y": 170, "w": 200, "h": 50, "color": "#6b5540" },
+        { "label": "모니터", "x": 480, "y": 130, "w": 70, "h": 16, "color": "#222831" },
+        { "label": "파일철", "x": 140, "y": 150, "w": 60, "h": 140, "color": "#7a6a4a" },
+        { "label": "서랍", "x": 800, "y": 170, "w": 80, "h": 60, "color": "#5a4a3a" }
+      ]
+    },
+    "VendorRoomScene": {
+      "name": "외부업체 미팅룸",
+      "npc": "lee",
+      "initiallyLocked": false,
+      "floorColor": "#352838",
+      "npcPos": { "x": 480, "y": 150 },
+      "obstacles": [
+        { "label": "회의 테이블", "x": 480, "y": 280, "w": 320, "h": 90, "color": "#6b5540" },
+        { "label": "노트북", "x": 420, "y": 270, "w": 60, "h": 30, "color": "#555c66" },
+        { "label": "외부업체 보고서", "x": 820, "y": 150, "w": 70, "h": 90, "color": "#8a7a5a" }
+      ]
+    },
+    "LoungeScene": {
+      "name": "참가자 라운지",
+      "npc": "choi",
+      "initiallyLocked": false,
+      "floorColor": "#3a3625",
+      "npcPos": { "x": 480, "y": 220 },
+      "obstacles": [
+        { "label": "소파", "x": 250, "y": 250, "w": 60, "h": 180, "color": "#4a4f6a" },
+        { "label": "소파", "x": 710, "y": 250, "w": 60, "h": 180, "color": "#4a4f6a" },
+        { "label": "설문 게시판", "x": 480, "y": 60, "w": 220, "h": 20, "color": "#c8b88a" },
+        { "label": "만족도 조사표", "x": 480, "y": 330, "w": 100, "h": 40, "color": "#e8e0c8" }
+      ]
+    },
+    "ExecutiveOfficeScene": {
+      "name": "임원실",
+      "npc": "kim",
+      "initiallyLocked": true,
+      "lockedMessage": "김상무는 지금 만나기 어렵다.",
+      "floorColor": "#3a2525",
+      "npcPos": { "x": 480, "y": 150 },
+      "obstacles": [
+        { "label": "임원 책상", "x": 480, "y": 220, "w": 260, "h": 60, "color": "#4a3020" },
+        { "label": "책장", "x": 140, "y": 170, "w": 60, "h": 200, "color": "#5a4030" },
+        { "label": "응접 소파", "x": 800, "y": 330, "w": 120, "h": 50, "color": "#4a4f6a" }
+      ]
+    }
+  }
+}

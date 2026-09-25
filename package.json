@@ -1,0 +1,18 @@
+{
+  "name": "case026",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "CASE 026 — 리더십 교육 만족도 급락 사건 (Phaser 3 탐정 어드벤처)",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "phaser": "^3.90.0"
+  },
+  "devDependencies": {
+    "vite": "^7.0.0"
+  }
+}

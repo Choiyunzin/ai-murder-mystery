@@ -1,0 +1,8 @@
+{
+  "jung": { "id": "jung", "name": "정강사", "role": "오전 AI 교육 강사", "color": "#4fa3e0", "room": "MorningClassScene" },
+  "jo":   { "id": "jo",   "name": "조강사", "role": "오후 리더십 교육 강사", "color": "#e0924f", "room": "AfternoonClassScene" },
+  "park": { "id": "park", "name": "박피엠", "role": "사내 교육운영 PM", "color": "#8fd16a", "room": "PMSOfficeScene" },
+  "lee":  { "id": "lee",  "name": "이과장", "role": "외부 교육대행업체 담당자", "color": "#d16ab8", "room": "VendorRoomScene" },
+  "choi": { "id": "choi", "name": "최본부장", "role": "교육 참가자 대표", "color": "#e0d04f", "room": "LoungeScene" },
+  "kim":  { "id": "kim",  "name": "김상무", "role": "경영기획 담당 임원", "color": "#c94f4f", "room": "ExecutiveOfficeScene" }
+}
