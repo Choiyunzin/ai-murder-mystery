@@ -229,3 +229,19 @@ button.nb-item:hover, button.nb-item:focus-visible { border-color: var(--accent)
 .menu-actions { display: flex; gap: 0.7em; flex-wrap: wrap; }
 .menu-help { color: var(--muted); font-size: 0.76em; line-height: 1.7; border-top: 1px solid var(--line); padding-top: 0.8em; }
 .menu-help b { color: var(--ink); font-weight: 600; }
+
+/* ── 초상화 ─────────────────────────────── */
+.dlg-portrait {
+  position: absolute; left: 1.1em; bottom: calc(100% - 2.7em); margin: 0;
+  width: 9.5em; aspect-ratio: 4 / 5; border-radius: 0.35em; overflow: hidden;
+  background: radial-gradient(circle at 50% 35%, #2c303b, #121419 75%);
+  border: 2px solid var(--ring, var(--accent)); box-shadow: 0 0.5em 1.4em rgba(0, 0, 0, 0.55);
+  animation: portrait-in 0.22s ease-out;
+}
+.dlg-portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%; display: block; }
+.dlg-portrait.pixel img { object-fit: contain; object-position: 50% 70%; image-rendering: pixelated; padding: 12% 10% 0; }
+.dlg.has-portrait .dlg-head { padding-left: 10.4em; min-height: 2em; }
+@keyframes portrait-in { from { opacity: 0; transform: translateY(0.6em); } to { opacity: 1; transform: none; } }
+.pick .avatar { width: 2.3em; height: 2.3em; border-radius: 50%; object-fit: cover; object-position: 50% 20%; border: 2px solid; flex: none; background: #20232b; }
+.pick .avatar.pixel { object-fit: contain; object-position: 50% 30%; image-rendering: pixelated; }
+@media (prefers-reduced-motion: reduce) { .dlg-portrait { animation: none; } }

@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { FONT_FAMILY } from '../config/gameConfig.js';
 import gameState from '../systems/GameState.js';
 import { getTopics } from '../systems/DialogueSystem.js';
+import { TOKEN_LAYOUT } from '../gfx/Portraits.js';
 
 /**
  * NPC: 인물 스프라이트 + 이름표 + 상태 말풍선(… 첫 대화 전 / ! 제시할 증거가 있음).
@@ -9,18 +10,27 @@ import { getTopics } from '../systems/DialogueSystem.js';
  */
 export default class NPC extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, character, { onClick } = {}) {
-    super(scene, x, y, `npc_${character.id}_0`);
+    const tokenKey = `token_${character.id}`;
+    const token = scene.textures.exists(tokenKey);
+    super(scene, x, y, token ? tokenKey : `npc_${character.id}_0`);
     this.character = character;
 
     scene.add.existing(this);
     scene.physics.add.existing(this, true);
-    this.setOrigin(0.5, 0.6);
-    this.body.setCircle(11, 5, 27);
+    if (token) {
+      this.setOrigin(...TOKEN_LAYOUT.origin);
+      const b = TOKEN_LAYOUT.body;
+      this.body.setCircle(b.r + 1, b.x - 1, b.y - 1);
+    } else {
+      this.setOrigin(0.5, 0.6);
+      this.body.setCircle(11, 5, 27);
+    }
     this.body.updateFromGameObject();
     this.setDepth(y + 20);
+    const headTop = token ? 40 : 34;
 
     this.nameTag = scene.add
-      .text(x, y - 34, character.name, {
+      .text(x, y - headTop, character.name, {
         fontFamily: FONT_FAMILY,
         fontSize: '13px',
         color: '#ffffff',
@@ -31,7 +41,7 @@ export default class NPC extends Phaser.Physics.Arcade.Sprite {
       .setDepth(900);
 
     this.marker = scene.add
-      .text(x + 18, y - 40, '', { fontFamily: FONT_FAMILY, fontSize: '14px', fontStyle: 'bold', color: '#17140c', backgroundColor: '#f1ead8', padding: { x: 5, y: 0 } })
+      .text(x + (token ? 26 : 18), y - headTop - 6, '', { fontFamily: FONT_FAMILY, fontSize: '14px', fontStyle: 'bold', color: '#17140c', backgroundColor: '#f1ead8', padding: { x: 5, y: 0 } })
       .setOrigin(0.5, 1)
       .setDepth(901);
     scene.tweens.add({ targets: this.marker, y: this.marker.y - 4, duration: 700, yoyo: true, repeat: -1, ease: 'Sine.inOut' });

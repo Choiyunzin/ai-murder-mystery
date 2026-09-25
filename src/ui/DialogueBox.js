@@ -4,6 +4,7 @@ import { Registry } from '../systems/Registry.js';
 import gameState from '../systems/GameState.js';
 import * as Dialogue from '../systems/DialogueSystem.js';
 import { audio } from '../systems/AudioSystem.js';
+import { portraitSrc } from '../gfx/Portraits.js';
 
 const STATUS_TAG = {
   locked: '잠김',
@@ -32,10 +33,18 @@ class DialogueBox {
     this.bodyEl = h('div', { class: 'dlg-body', onclick: () => this.advance() });
     this.choicesEl = h('ol', { class: 'choices' });
 
+    // 대화 상대 초상화 카드 (이미지가 없으면 도트 캐릭터를 확대해 보여 준다)
+    let portrait = null;
+    if (npc) {
+      const { src, pixel } = portraitSrc(ui.game, npcId);
+      portrait = h('figure', { class: `dlg-portrait${pixel ? ' pixel' : ''}`, style: `--ring:${npc.color}` }, h('img', { src, alt: npc.name }));
+    }
+
     this.modal = {
       el: h(
         'section',
-        { class: 'ui-modal dlg', role: 'dialog', 'aria-label': npc ? `${npc.name}와의 대화` : '조사' },
+        { class: `ui-modal dlg${npc ? ' has-portrait' : ''}`, role: 'dialog', 'aria-label': npc ? `${npc.name}와의 대화` : '조사' },
+        portrait,
         h('div', { class: 'dlg-head' }, this.nameEl, npc ? h('span', { class: 'dlg-role' }, npc.role) : null, this.metaEl),
         this.bodyEl,
         this.choicesEl

@@ -2,11 +2,16 @@ import Phaser from 'phaser';
 import { GAME_WIDTH, CANVAS_HEIGHT, FONT_FAMILY } from '../config/gameConfig.js';
 import { makeCharacterTextures, PLAYER_LOOK } from '../gfx/Textures.js';
 import characters from '../data/characters.json';
+import { preloadPortraits, makeTokenTexture } from '../gfx/Portraits.js';
 
 /** placeholder 텍스처를 생성하고 로비로 진입한다. */
 export default class BootScene extends Phaser.Scene {
   constructor() {
     super({ key: 'BootScene' });
+  }
+
+  preload() {
+    preloadPortraits(this);
   }
 
   create() {
@@ -36,6 +41,10 @@ export default class BootScene extends Phaser.Scene {
 
   createPlaceholderTextures() {
     makeCharacterTextures(this, 'player', PLAYER_LOOK);
-    for (const c of Object.values(characters)) makeCharacterTextures(this, `npc_${c.id}`, { ...c.look, outfit: c.color });
+    for (const c of Object.values(characters)) {
+      makeCharacterTextures(this, `npc_${c.id}`, { ...c.look, outfit: c.color });
+      makeTokenTexture(this, c.id, c.color);
+    }
+    makeTokenTexture(this, 'player', '#d9b45a');
   }
 }

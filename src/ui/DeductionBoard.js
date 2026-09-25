@@ -2,6 +2,7 @@ import { ui, h } from './UIRoot.js';
 import { Registry } from '../systems/Registry.js';
 import gameState from '../systems/GameState.js';
 import { submitDeduction } from '../systems/ScoringSystem.js';
+import { portraitSrc } from '../gfx/Portraits.js';
 
 /**
  * 최종 추론 보드: 배후(1명) → 실행(1명) → 결과 경로(복수) 선택 후 제출.
@@ -21,7 +22,10 @@ export function openDeductionBoard({ onBack, onResult, onFeedback }) {
       h(
         'button',
         { class: 'pick', 'aria-pressed': 'false', onclick: () => { sel[key] = c.id; sync(); } , 'data-id': c.id },
-        h('span', { class: 'dot', style: `background:${c.color}` }),
+        (() => {
+          const { src, pixel } = portraitSrc(ui.game, c.id);
+          return h('img', { class: `avatar${pixel ? ' pixel' : ''}`, src, alt: '', style: `border-color:${c.color}` });
+        })(),
         h('span', {}, c.name, h('span', { class: 'sub' }, c.role))
       )
     );
