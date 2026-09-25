@@ -1,47 +1,126 @@
 {
   "npc": "lee",
   "greeting": {
-    "lines": ["아이고, 오셨어요! 외부 대행사 이과장입니다. 커피라도 한잔 하시죠.", "이번 과정이요? 만족도 4.3 정도로 양호했습니다. 보고서에도 그렇게 올렸고요."],
-    "effects": { "statements": ["lee_claim_43"] }
+    "lines": [
+      "아이고, 오셨어요! 외부 대행사 이과장입니다. 커피라도 한잔 하시죠.",
+      "이번 과정이요? 만족도 4.3 정도로 양호했습니다. 보고서에도 그렇게 올렸고요."
+    ],
+    "effects": {
+      "statements": [
+        "lee_claim_43"
+      ]
+    }
   },
-  "returnGreeting": ["또 뵙네요! 편하게 물어보세요."],
-  "evasive": ["하하… 그건 제가 답변드리기가 좀. 윗선에 확인해 보셔야 할 것 같네요."],
-  "repeat": ["아까 말씀드린 그대로예요~"],
+  "returnGreeting": [
+    "또 뵙네요! 편하게 물어보세요."
+  ],
+  "evasive": [
+    "하하… 그건 제가 답변드리기가 좀. 윗선에 확인해 보셔야 할 것 같네요."
+  ],
+  "repeat": [
+    "아까 말씀드린 그대로예요~"
+  ],
   "statements": {
     "lee_claim_43": "만족도는 4.3 정도로 양호했다.",
-    "lee_blame_choi": "참가자 일부, 특히 최본부장이 개인적인 일로 불만이 많았다.",
+    "lee_blame_choi": "최본부장이 본부 조직문화 점수 때문에 예민해 교육 분위기를 흐렸다.",
     "lee_admit": "재계약 때문에 보고용 만족도를 4.3으로 부풀렸다. 실제 평균은 2.1이다."
   },
   "topics": [
     {
-      "id": "result", "label": "교육 결과에 대해", "alert": 0,
-      "lines": ["보고드린 대로 4.3입니다. 전반적으로 양호했어요.", "몇몇 분 불만이야 어느 과정에나 있는 거고요."],
-      "effects": { "statements": ["lee_claim_43"] }
+      "id": "result",
+      "label": "교육 결과에 대해",
+      "alert": 0,
+      "lines": [
+        "보고드린 대로 4.3입니다. 전반적으로 양호했어요.",
+        "몇몇 분 불만이야 어느 과정에나 있는 거고요."
+      ],
+      "effects": {
+        "statements": [
+          "lee_claim_43"
+        ]
+      }
     },
     {
-      "id": "instructors", "label": "강사들에 대해", "alert": 0,
-      "lines": ["두 분 다 베테랑이시죠.", "다만 이번엔 시간이 좀… 아, 이건 제 소관이 아니고요."]
+      "id": "instructors",
+      "label": "강사들에 대해",
+      "alert": 0,
+      "lines": [
+        "두 분 다 베테랑이시죠.",
+        "다만 이번엔 시간이 좀… 아, 이건 제 소관이 아니고요."
+      ]
     },
     {
-      "id": "participants", "label": "참가자 반응에 대해", "alert": 5,
-      "lines": ["몇 분 불만이 있으셨죠. 특히 최본부장님이 좀…", "이번 인사에서 뭐가 있으셨다던데. 그런 분위기가 전체에 영향을 줬을 수도 있어요."],
-      "effects": { "statements": ["lee_blame_choi"] }
+      "id": "participants",
+      "label": "참가자 반응에 대해",
+      "alert": 5,
+      "lines": [
+        "몇 분 불만이 있으셨죠. 특히 최본부장님이 좀…",
+        "본부 조직문화 점수가 안 좋게 나왔다던데, 첫날부터 분위기가 날카로웠어요. 그게 전체에 번졌을 수도 있고요."
+      ],
+      "effects": {
+        "statements": [
+          "lee_blame_choi"
+        ]
+      }
     },
     {
-      "id": "accuse", "label": "데이터를 조작한 것 아닙니까?", "alert": 25,
-      "lines": ["에이, 조작이라뇨.", "해석의 차이죠, 해석의 차이."]
+      "id": "accuse",
+      "label": "데이터를 조작한 것 아닙니까?",
+      "alert": 25,
+      "lines": [
+        "에이, 조작이라뇨.",
+        "해석의 차이죠, 해석의 차이."
+      ]
     },
     {
-      "id": "survey", "label": "[조사표 제시] 실제 만족도는 2.1입니다", "cost": 0, "once": true,
-      "requires": { "evidence": ["ev_survey"], "statements": ["lee_claim_43"] }, "lockedLabel": "🔒 ??? (증거가 더 필요하다)",
-      "lines": ["…아, 그게.", "전체 평균은 2.1 맞습니다. 재계약이 걸려 있어서 긍정 응답 문항만 뽑아 4.3으로 올렸어요.", "그래도 점수를 떨어뜨린 건 저희가 아닙니다. 시간 줄인 건 고객사 쪽 결정이었어요."],
-      "effects": { "statements": ["lee_admit"], "contradictions": ["ct_satisfaction_data"] }
+      "id": "survey",
+      "label": "[조사표 제시] 실제 만족도는 2.1입니다",
+      "cost": 0,
+      "once": true,
+      "requires": {
+        "evidence": [
+          "ev_survey"
+        ],
+        "statements": [
+          "lee_claim_43"
+        ]
+      },
+      "lockedLabel": "🔒 ??? (증거가 더 필요하다)",
+      "lines": [
+        "…아, 그게.",
+        "전체 평균은 2.1 맞습니다. 재계약이 걸려 있어서 긍정 응답 문항만 뽑아 4.3으로 올렸어요.",
+        "그래도 점수를 떨어뜨린 건 저희가 아닙니다. 시간 줄인 건 고객사 쪽 결정이었어요."
+      ],
+      "effects": {
+        "statements": [
+          "lee_admit"
+        ],
+        "contradictions": [
+          "ct_satisfaction_data"
+        ]
+      }
     },
     {
-      "id": "mail", "label": "[메일 제시] 중간보고 메일의 원자료", "cost": 0, "once": true,
-      "requires": { "evidence": ["ev_vendor_mail"] }, "lockedLabel": "🔒 ??? (증거가 더 필요하다)",
-      "lines": ["그 메일까지 보셨어요?", "네… 보고용 숫자는 제가 손봤습니다. 죄송합니다.", "하지만 교육이 망가진 이유까지 제 탓은 아니에요."],
-      "effects": { "statements": ["lee_admit"] }
+      "id": "mail",
+      "label": "[메일 제시] 중간보고 메일의 원자료",
+      "cost": 0,
+      "once": true,
+      "requires": {
+        "evidence": [
+          "ev_vendor_mail"
+        ]
+      },
+      "lockedLabel": "🔒 ??? (증거가 더 필요하다)",
+      "lines": [
+        "그 메일까지 보셨어요?",
+        "네… 보고용 숫자는 제가 손봤습니다. 죄송합니다.",
+        "하지만 교육이 망가진 이유까지 제 탓은 아니에요."
+      ],
+      "effects": {
+        "statements": [
+          "lee_admit"
+        ]
+      }
     }
   ]
 }

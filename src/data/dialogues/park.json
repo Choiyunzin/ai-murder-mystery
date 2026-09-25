@@ -1,12 +1,25 @@
 {
   "npc": "park",
   "greeting": {
-    "lines": ["교육운영 PM 박피엠입니다.", "운영은 계획대로 했습니다. 시간 조정도 미리 여유 있게 전달했고요."],
-    "effects": { "statements": ["park_claim_early"] }
+    "lines": [
+      "교육운영 PM 박피엠입니다.",
+      "운영은 계획대로 했습니다. 시간 조정도 미리 여유 있게 전달했고요."
+    ],
+    "effects": {
+      "statements": [
+        "park_claim_early"
+      ]
+    }
   },
-  "returnGreeting": ["또 무슨 일이시죠?"],
-  "evasive": ["죄송하지만 더는 말씀드릴 게 없습니다."],
-  "repeat": ["같은 질문을 반복하시네요."],
+  "returnGreeting": [
+    "또 무슨 일이시죠?"
+  ],
+  "evasive": [
+    "죄송하지만 더는 말씀드릴 게 없습니다."
+  ],
+  "repeat": [
+    "같은 질문을 반복하시네요."
+  ],
   "statements": {
     "park_claim_early": "시간 조정은 미리 여유 있게 전달했다.",
     "park_admit_d2": "사실 통보는 교육 이틀 전이었고, 강사와 사전 협의도 없었다.",
@@ -15,33 +28,110 @@
   },
   "topics": [
     {
-      "id": "schedule", "label": "일정 조정에 대해", "alert": 0,
-      "lines": ["시간 조정은 미리 여유 있게 전달했습니다. 절차대로요.", "강사님들도 충분히 대응하실 수 있는 일정이었습니다."],
-      "effects": { "statements": ["park_claim_early"] }
+      "id": "schedule",
+      "label": "일정 조정에 대해",
+      "alert": 0,
+      "lines": [
+        "시간 조정은 미리 여유 있게 전달했습니다. 절차대로요.",
+        "강사님들도 충분히 대응하실 수 있는 일정이었습니다."
+      ],
+      "effects": {
+        "statements": [
+          "park_claim_early"
+        ]
+      }
     },
     {
-      "id": "budget", "label": "예산에 대해", "alert": 5,
-      "lines": ["하반기 예산이 빠듯한 건 사실입니다.", "그 이상은… 제가 말씀드릴 사안이 아니네요."]
+      "id": "budget",
+      "label": "예산에 대해",
+      "alert": 5,
+      "lines": [
+        "하반기 원가절감 때문에 예산이 빠듯한 건 사실입니다.",
+        "그 이상은… 제가 말씀드릴 사안이 아니네요."
+      ]
     },
     {
-      "id": "vendor", "label": "외부업체에 대해", "alert": 0,
-      "lines": ["이과장님 쪽 보고로는 반응이 나쁘지 않았다고 들었는데요.", "만족도가 떨어졌다면 업체 쪽도 확인해 보셔야죠."]
+      "id": "vendor",
+      "label": "외부업체에 대해",
+      "alert": 0,
+      "lines": [
+        "이과장님 쪽 보고로는 반응이 나쁘지 않았다고 들었는데요.",
+        "만족도가 떨어졌다면 업체 쪽도 확인해 보셔야죠."
+      ]
     },
     {
-      "id": "accuse", "label": "당신이 교육을 망친 겁니까?", "alert": 25,
-      "lines": ["말씀이 지나치시네요.", "저 혼자 결정할 수 있는 일은 하나도 없습니다."]
+      "id": "accuse",
+      "label": "당신이 교육을 망친 겁니까?",
+      "alert": 25,
+      "lines": [
+        "말씀이 지나치시네요.",
+        "저 혼자 결정할 수 있는 일은 하나도 없습니다."
+      ]
     },
     {
-      "id": "memo", "label": "[메모 제시] 이 메모, 교육 이틀 전 날짜인데요?", "cost": 0, "once": true,
-      "requires": { "evidence": ["ev_memo"], "statements": ["park_claim_early", "jo_claim_d2"] }, "lockedLabel": "🔒 ??? (증거와 진술이 더 필요하다)",
-      "lines": ["…그걸 어디서 찾으셨어요.", "네, 이틀 전이었습니다. 강사님들과 사전 협의도 못 했고요.", "저도… 위에서 지시가 내려와서 어쩔 수 없었습니다."],
-      "effects": { "statements": ["park_admit_d2", "park_admit_order"], "contradictions": ["ct_notice_timing"] }
+      "id": "memo",
+      "label": "[메모 제시] 이 메모, 교육 이틀 전 날짜인데요?",
+      "cost": 0,
+      "once": true,
+      "requires": {
+        "evidence": [
+          "ev_memo"
+        ],
+        "statements": [
+          "park_claim_early",
+          "jo_claim_d2"
+        ]
+      },
+      "lockedLabel": "🔒 ??? (증거와 진술이 더 필요하다)",
+      "lines": [
+        "…그걸 어디서 찾으셨어요.",
+        "네, 이틀 전이었습니다. 강사님들과 사전 협의도 못 했고요.",
+        "저도… 위에서 지시가 내려와서 어쩔 수 없었습니다."
+      ],
+      "effects": {
+        "statements": [
+          "park_admit_d2",
+          "park_admit_order"
+        ],
+        "contradictions": [
+          "ct_notice_timing"
+        ]
+      }
     },
     {
-      "id": "ai", "label": "오전 AI 파트 단축은 어떻게 전달했습니까?", "alert": 5,
-      "requires": { "evidence": ["ev_memo"], "any": [{ "statements": ["jung_ai_cut"] }, { "statements": ["jung_no_paper"] }] }, "lockedLabel": "🔒 ??? (오전 파트 사정을 더 알아봐야 한다)",
-      "lines": ["AI 파트요? 그건… 정강사님께 전화로 말씀드렸습니다.", "따로 문서는 남기지 않았어요. 그렇게 하라고 해서요."],
-      "effects": { "statements": ["park_ai_verbal"], "clues": ["cl_ai_no_doc"] }
+      "id": "ai",
+      "label": "오전 AI 파트 단축은 어떻게 전달했습니까?",
+      "alert": 5,
+      "requires": {
+        "evidence": [
+          "ev_memo"
+        ],
+        "any": [
+          {
+            "statements": [
+              "jung_ai_cut"
+            ]
+          },
+          {
+            "statements": [
+              "jung_no_paper"
+            ]
+          }
+        ]
+      },
+      "lockedLabel": "🔒 ??? (오전 파트 사정을 더 알아봐야 한다)",
+      "lines": [
+        "AI 파트요? 그건… 정강사님께 전화로 말씀드렸습니다.",
+        "따로 문서는 남기지 않았어요. 그렇게 하라고 해서요."
+      ],
+      "effects": {
+        "statements": [
+          "park_ai_verbal"
+        ],
+        "clues": [
+          "cl_ai_no_doc"
+        ]
+      }
     }
   ]
 }

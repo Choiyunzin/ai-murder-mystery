@@ -1,46 +1,126 @@
 {
   "npc": "choi",
-  "greeting": { "lines": ["참가자 대표 최본부장이오.", "할 말이 많습니다. 뭐부터 들을 거요?"] },
-  "returnGreeting": ["또 왔소? 앉으시오."],
-  "evasive": ["됐소. 더 얘기하고 싶지 않소."],
-  "repeat": ["했던 말 또 하게 하지 마시오."],
+  "greeting": {
+    "lines": [
+      "참가자 대표 최본부장이오.",
+      "할 말이 많습니다. 뭐부터 들을 거요?"
+    ]
+  },
+  "returnGreeting": [
+    "또 왔소? 앉으시오."
+  ],
+  "evasive": [
+    "됐소. 더 얘기하고 싶지 않소."
+  ],
+  "repeat": [
+    "했던 말 또 하게 하지 마시오."
+  ],
   "statements": {
-    "choi_old_material": "리더십 파트는 예전 자료 같았다. 다른 회사 사례가 그대로 나왔다.",
-    "choi_ai_mismatch": "AI 파트는 사업부장 업무와 연결이 안 됐고 실습 시간도 짧았다.",
-    "choi_grudge": "이번 인사에서 또 승진이 누락돼 교육 내내 기분이 좋지 않았다.",
-    "choi_confession": "사실 다 저 때문인 것 같다. 첫날부터 분위기를 험하게 만들었다."
+    "choi_old_material": "리더십 파트는 예전 자료 같았다. IT 회사 사례뿐, 교대근무 현장 얘기는 없었다.",
+    "choi_ai_mismatch": "AI 파트는 현장 업무와 연결이 안 됐고 실습 시간도 짧았다.",
+    "choi_grudge": "올해 본부 조직문화 진단 점수가 전사 최하위로 나와 교육 내내 마음이 무거웠다.",
+    "choi_confession": "사실 다 내 탓인 것 같다. 본부 점수도, 교육 첫날 날을 세운 것도 나였다."
   },
   "topics": [
     {
-      "id": "leadership", "label": "리더십 파트는 어땠습니까?", "alert": 0,
-      "lines": ["솔직히 예전 자료 같았소.", "다른 회사 사례가 그대로 나오더군. 우리 얘기가 아니었어."],
-      "effects": { "statements": ["choi_old_material"] }
+      "id": "leadership",
+      "label": "리더십 파트는 어땠습니까?",
+      "alert": 0,
+      "lines": [
+        "솔직히 예전 자료 같았소.",
+        "IT 회사 사례가 그대로 나오더군. 3교대 돌리는 현장 얘기는 하나도 없었어."
+      ],
+      "effects": {
+        "statements": [
+          "choi_old_material"
+        ]
+      }
     },
     {
-      "id": "ai", "label": "AI 파트는 어땠습니까?", "alert": 0,
-      "lines": ["사업부장한테 코드 문법을 가르치면 어쩌자는 건지.", "업무랑 연결이 안 됐어요. 실습 시간도 짧았고."],
-      "effects": { "statements": ["choi_ai_mismatch"] }
+      "id": "ai",
+      "label": "AI 파트는 어땠습니까?",
+      "alert": 0,
+      "lines": [
+        "현장 리더한테 코드 문법을 가르치면 어쩌자는 건지.",
+        "설비 데이터든 안전 보고서든, 우리 일이랑 연결이 안 됐어요. 실습 시간도 짧았고."
+      ],
+      "effects": {
+        "statements": [
+          "choi_ai_mismatch"
+        ]
+      }
     },
     {
-      "id": "personal", "label": "요즘 어떠십니까?", "alert": 0,
-      "lines": ["…이번 인사에서 또 빠졌소.", "교육 들어가면서도 기분이 좋을 리가 없었지."],
-      "effects": { "statements": ["choi_grudge"], "flags": ["choi_grudge"] }
+      "id": "personal",
+      "label": "요즘 어떠십니까?",
+      "alert": 0,
+      "lines": [
+        "…올해 우리 본부 조직문화 진단 점수가 전사 최하위로 나왔소.",
+        "그 와중에 리더 교육이 필수라니. 꼭 우리 본부 때문에 불려 온 것 같더군."
+      ],
+      "effects": {
+        "statements": [
+          "choi_grudge"
+        ],
+        "flags": [
+          "choi_grudge"
+        ]
+      }
     },
     {
-      "id": "confess", "label": "그 기분이 교육 분위기에 영향을 줬습니까?", "alert": 5,
-      "requires": { "flags": ["choi_grudge"] },
-      "lines": ["…", "사실 다 저 때문인 것 같아요.", "제가 첫날부터 분위기를 험하게 만들었으니. 다른 사람들도 따라서 점수를 낮게 줬겠지."],
-      "effects": { "statements": ["choi_confession"] }
+      "id": "confess",
+      "label": "그 마음이 교육 분위기에 영향을 줬습니까?",
+      "alert": 5,
+      "requires": {
+        "flags": [
+          "choi_grudge"
+        ]
+      },
+      "lines": [
+        "…",
+        "사실 다 내 탓인 것 같소.",
+        "본부 점수가 그 모양인 것도, 교육 첫날부터 날을 세운 것도 나였으니. 다른 사람들도 따라서 점수를 낮게 줬겠지."
+      ],
+      "effects": {
+        "statements": [
+          "choi_confession"
+        ]
+      }
     },
     {
-      "id": "accuse", "label": "본부장님 불만 때문에 점수가 떨어진 것 아닙니까?", "alert": 25,
-      "lines": ["뭐요?", "내 점수 하나로 평균이 2점대가 된단 말이오?"]
+      "id": "accuse",
+      "label": "본부장님 때문에 점수가 떨어진 것 아닙니까?",
+      "alert": 25,
+      "lines": [
+        "뭐요?",
+        "내 점수 하나로 평균이 2점대가 된단 말이오?"
+      ]
     },
     {
-      "id": "refute", "label": "[증거로 반박] 두 파트 모두 낮은 평가였습니다", "cost": 0, "once": true,
-      "requires": { "statements": ["choi_confession"], "evidence": ["ev_survey", "ev_memo"] }, "lockedLabel": "🔒 ??? (반박할 증거가 더 필요하다)",
-      "lines": ["…오전, 오후 둘 다 낮았다고? 실습 시간도 줄었고?", "그렇다면… 내 기분 하나로 설명될 일은 아니었군.", "괜히 혼자 짊어지려 했나 보오."],
-      "effects": { "contradictions": ["ct_false_confession"] }
+      "id": "refute",
+      "label": "[증거로 반박] 모든 본부, 두 파트 모두 낮은 평가였습니다",
+      "cost": 0,
+      "once": true,
+      "requires": {
+        "statements": [
+          "choi_confession"
+        ],
+        "evidence": [
+          "ev_survey",
+          "ev_memo"
+        ]
+      },
+      "lockedLabel": "🔒 ??? (반박할 증거가 더 필요하다)",
+      "lines": [
+        "…참가 본부 네 곳이 다 2점대였다고? 오전, 오후 둘 다? 실습 시간도 줄었고?",
+        "그렇다면… 우리 본부 하나로 설명될 일은 아니었군.",
+        "조직문화 점수는 내가 따로 풀어야 할 숙제고. 괜히 혼자 짊어지려 했나 보오."
+      ],
+      "effects": {
+        "contradictions": [
+          "ct_false_confession"
+        ]
+      }
     }
   ]
 }
