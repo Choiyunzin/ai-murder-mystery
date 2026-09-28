@@ -1,5 +1,6 @@
 import gameState from './GameState.js';
 import { Registry } from './Registry.js';
+import { aiReview } from './AiLabSystem.js';
 
 const rules = () => Registry.gameRules;
 
@@ -79,6 +80,13 @@ export function computeScore() {
   const warned = npcs.filter((x) => x.alert >= rules().alert.warnAt && x.alert < alertMax).length;
   const alert = clamp(s.alert.max - guarded * s.alert.perGuardedNpc - warned * s.alert.perWarnedNpc, 0, s.alert.max);
 
+  // AI 오케스트레이션: 충분히 위임했는가 + 그럴듯한 오답을 채택하지 않았는가
+  const ai = aiReview();
+  const aiRule = s.ai;
+  const delegate = Math.round(aiRule.delegatePoints * Math.min(1, ai.calls / aiRule.delegateTarget));
+  const judge = ai.calls > 0 && ai.adoptedWrong === 0 ? aiRule.judgePoints : 0;
+  const aiScore = clamp(delegate + judge, 0, aiRule.max);
+
   const evTotal = Object.keys(Registry.evidences).length;
   const ctTotal = Object.keys(Registry.contradictions).length;
   const rows = [
@@ -87,7 +95,8 @@ export function computeScore() {
     { label: `증거 확보 (${gameState.evidence.length}/${evTotal})`, value: gameState.evidence.length * s.perEvidence, max: evTotal * s.perEvidence },
     { label: `모순 발견 (${gameState.contradictions.length}/${ctTotal})`, value: gameState.contradictions.length * s.perContradiction, max: ctTotal * s.perContradiction },
     { label: `질문 효율 (질문 ${questions}회 · 낭비 ${wasted}회)`, value: Math.round(efficiency), max: s.efficiency.max },
-    { label: `경계 관리 (최고조 ${guarded}명)`, value: alert, max: s.alert.max }
+    { label: `경계 관리 (최고조 ${guarded}명)`, value: alert, max: s.alert.max },
+    { label: `AI 오케스트레이션 (위임 ${ai.calls}회 · 오답 채택 ${ai.adoptedWrong}회)`, value: aiScore, max: aiRule.max }
   ];
   const total = rows.reduce((n, r) => n + r.value, 0);
   const max = rows.reduce((n, r) => n + r.max, 0);

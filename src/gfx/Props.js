@@ -124,6 +124,20 @@ export function drawProp(g, kind, x, y, w, h, color) {
       g.fillStyle(0x2f6a34, 1).fillCircle(x + w / 2, y + h * 0.35, w * 0.38);
       g.fillStyle(0x3f8a44, 1).fillCircle(x + w * 0.35, y + h * 0.3, w * 0.22).fillCircle(x + w * 0.65, y + h * 0.42, w * 0.2);
       break;
+    case 'console': {
+      // AI 분석 콘솔: 어두운 책상 위 모니터 3대
+      g.fillStyle(0x12181e, 1).fillRoundedRect(x, y, w, h, 4);
+      g.fillStyle(c, 1).fillRoundedRect(x, y, w, h - 5, 4);
+      const sw = (w - 16) / 3;
+      [0x6cc3c0, 0xd9b45a, 0xb58ad9].forEach((col, i) => {
+        const sx = x + 5 + i * (sw + 3);
+        g.fillStyle(0x0b0f14, 1).fillRect(sx, y + 5, sw, h - 20);
+        g.fillStyle(col, 0.85).fillRect(sx + 2, y + 7, sw - 4, h - 24);
+        g.fillStyle(0xffffff, 0.5).fillRect(sx + 4, y + 10, (sw - 8) * 0.6, 2).fillRect(sx + 4, y + 15, (sw - 8) * 0.4, 2);
+      });
+      g.fillStyle(0x6cc3c0, 1).fillCircle(x + w - 7, y + h - 10, 2);
+      break;
+    }
     default:
       g.fillStyle(c, 1).fillRect(x, y, w, h);
   }

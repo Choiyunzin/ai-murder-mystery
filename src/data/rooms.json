@@ -18,13 +18,14 @@
         "kind": "reception"
       },
       {
-        "label": "화분",
+        "label": "AI 분석 콘솔",
         "x": 180,
         "y": 320,
-        "w": 40,
-        "h": 40,
-        "color": "#3f6b3a",
-        "kind": "plant"
+        "w": 84,
+        "h": 46,
+        "color": "#1f2a33",
+        "kind": "console",
+        "action": "ai-lab"
       },
       {
         "label": "화분",

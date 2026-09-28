@@ -18,6 +18,7 @@ export function meets(req, state = gameState) {
     (req.talkedAtLeast == null || state.talkedCount() >= req.talkedAtLeast) &&
     (req.minContradictions == null || state.contradictions.length >= req.minContradictions) &&
     (req.minEvidence == null || state.evidence.length >= req.minEvidence) &&
+    (req.minAiReports == null || (state.aiReports?.length ?? 0) >= req.minAiReports) &&
     (!req.any || req.any.some((r) => meets(r, state))) &&
     (!req.not || !meets(req.not, state))
   );

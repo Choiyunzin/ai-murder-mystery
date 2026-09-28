@@ -1,6 +1,7 @@
 import gameState from './GameState.js';
 import { Registry } from './Registry.js';
 import { evaluateUnlocks } from './UnlockSystem.js';
+import { blindSpotNotice } from './AiLabSystem.js';
 
 /**
  * 대화/조사 결과의 effects 를 GameState 에 반영하고 알림 목록을 돌려준다.
@@ -28,5 +29,11 @@ export function applyEffects(effects) {
   }
   for (const id of effects.flags ?? []) gameState.setFlag(id, true);
 
-  return notices.concat(evaluateUnlocks());
+  const all = notices.concat(evaluateUnlocks());
+  // AI 가 놓친 '문서 부재'를 사람이 찾아낸 순간
+  if (all.some((n) => n.text?.includes(Registry.clues.cl_ai_no_doc.title))) {
+    const extra = blindSpotNotice();
+    if (extra) all.push(extra);
+  }
+  return all;
 }

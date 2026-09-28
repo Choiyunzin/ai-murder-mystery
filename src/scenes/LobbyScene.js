@@ -9,6 +9,7 @@ import { isTouchDevice } from '../ui/TouchControls.js';
 import { audio } from '../systems/AudioSystem.js';
 import { deductionReadiness } from '../systems/ScoringSystem.js';
 import { openNarration } from '../ui/DialogueBox.js';
+import { openAiLab } from '../ui/AiLabPanel.js';
 
 export default class LobbyScene extends ExploreScene {
   constructor() {
@@ -79,6 +80,10 @@ export default class LobbyScene extends ExploreScene {
   }
 
   onAction(action, label) {
+    if (action === 'ai-lab') {
+      openAiLab();
+      return;
+    }
     if (action !== 'deduction') return;
     if (gameState.deduction.outcome) {
       this.goToScene('EndingScene');
