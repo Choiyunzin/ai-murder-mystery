@@ -1,5 +1,7 @@
 import { ui, h } from './UIRoot.js';
 import { isTouchDevice } from './TouchControls.js';
+import { openReflections } from './ReflectionsPanel.js';
+import { SaveSystem } from '../systems/SaveSystem.js';
 
 /** 타이틀 메뉴: 새로 시작 / 이어하기 */
 export function openMenu({ canContinue, onNew, onContinue }) {
@@ -18,7 +20,13 @@ export function openMenu({ canContinue, onNew, onContinue }) {
       h('p', { class: 'menu-sub' }, '전사 리더 필수 과정 · 리더십 + AI 교육'),
       h('div', { class: 'menu-drop' }, h('span', { class: 'from' }, '4.8'), h('span', {}, '→'), h('span', { class: 'to' }, '2.1'), h('span', { class: 'unit' }, '/ 5.0 교육 만족도 (1차수 → 2차수)')),
       h('p', { class: 'menu-brief' }, '현장을 이끄는 리더십이 다시 강조되고 AX(AI 전환)가 본격화되면서, 전사 리더 대상 리더십·AI 교육이 필수가 됐다. 본사 리더가 들은 1차수는 4.8. 제철소 현장 리더가 참가한 이번 차수는 2.1. 여섯 명의 관계자를 만나 진술을 듣고, 문서를 찾고, 모순을 짚어 만족도가 떨어진 진짜 원인의 구조를 밝혀내자.'),
-      h('div', { class: 'menu-actions' }, newBtn, contBtn),
+      h(
+        'div',
+        { class: 'menu-actions' },
+        newBtn,
+        contBtn,
+        SaveSystem.reflections().length ? h('button', { class: 'btn', onclick: () => openReflections() }, `저장한 답변 (${SaveSystem.reflections().length})`) : null
+      ),
       h(
         'div',
         { class: 'menu-help' },

@@ -56,10 +56,13 @@ export const SaveSystem = {
     }
   },
 
-  /** 엔딩의 자유 입력 답변을 누적 저장 */
+  /** 엔딩의 자유 입력 답변을 누적 저장. 같은 판(id)에서 다시 저장하면 덮어쓴다. */
   saveReflection(text, meta) {
     const list = read(REFLECTION_KEY) ?? [];
-    list.push({ text, savedAt: new Date().toISOString(), ...meta });
+    const entry = { text, savedAt: new Date().toISOString(), ...meta };
+    const i = meta?.id ? list.findIndex((r) => r.id === meta.id) : -1;
+    if (i >= 0) list[i] = entry;
+    else list.push(entry);
     return write(REFLECTION_KEY, list);
   },
 

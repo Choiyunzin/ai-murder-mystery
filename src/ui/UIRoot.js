@@ -40,6 +40,16 @@ class UIRoot {
     // 캡처 단계에서 받아 Phaser 키 처리보다 먼저 실행되게 한다
     // (같은 키 입력으로 창이 열리자마자 한 줄 넘어가는 것을 막는다)
     window.addEventListener('keydown', (e) => this.onKey(e), { capture: true });
+
+    // 글 입력칸에 커서가 있는 동안에는 Phaser 가 스페이스·방향키를 가로채지 않게 한다
+    // (가로채면 입력칸에 띄어쓰기가 되지 않는다)
+    const isTextField = (el) => el instanceof HTMLTextAreaElement || (el instanceof HTMLInputElement && el.type === 'text');
+    document.addEventListener('focusin', (e) => {
+      if (isTextField(e.target)) game.input.keyboard.preventDefault = false;
+    });
+    document.addEventListener('focusout', (e) => {
+      if (isTextField(e.target)) game.input.keyboard.preventDefault = true;
+    });
   }
 
   makeMuteButton() {
@@ -80,7 +90,8 @@ class UIRoot {
 
   onKey(e) {
     const top = this.stack[this.stack.length - 1];
-    if (e.key.toLowerCase() === 'm' && !(e.target instanceof HTMLTextAreaElement) && !e.repeat) {
+    const typing = e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLInputElement;
+    if (e.key.toLowerCase() === 'm' && !typing && !e.repeat) {
       audio.toggleMute();
       return;
     }
