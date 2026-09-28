@@ -25,6 +25,8 @@ class GameState {
     this.statements = [];
     this.contradictions = [];
     this.inspected = [];
+    // AI 분석 콘솔 보고서: { key, agent, input, adopted: null | true | false }
+    this.aiReports = [];
     // NPC별 대화 상태: { pointsUsed, alert, asked: { topicId: count }, talked }
     this.npcs = {};
     // 최종 추론: 시도 횟수, 각 시도의 선택, 결과(solved | unsolved | null)
@@ -125,6 +127,7 @@ class GameState {
       statements: [...this.statements],
       contradictions: [...this.contradictions],
       inspected: [...this.inspected],
+      aiReports: JSON.parse(JSON.stringify(this.aiReports)),
       npcs: JSON.parse(JSON.stringify(this.npcs)),
       deduction: JSON.parse(JSON.stringify(this.deduction)),
       reflection: this.reflection

@@ -1,6 +1,7 @@
 import { ui, h } from './UIRoot.js';
 import { isTouchDevice } from './TouchControls.js';
 import { openReflections } from './ReflectionsPanel.js';
+import { openOrchestration } from './CutscenePlayer.js';
 import { SaveSystem } from '../systems/SaveSystem.js';
 
 /** 타이틀 메뉴: 새로 시작 / 이어하기 */
@@ -29,6 +30,12 @@ export function openMenu({ canContinue, onNew, onContinue }) {
       ),
       h(
         'div',
+        { class: 'menu-extra' },
+        h('button', { class: 'btn', onclick: () => openOrchestration() }, '▶ AI 오케스트레이션 해설 영상'),
+        h('span', {}, '게임에 담긴 개념 소개 · 일부 스포일러 포함')
+      ),
+      h(
+        'div',
         { class: 'menu-help' },
         touch
           ? [h('b', {}, '조이스틱'), ' 이동 · ', h('b', {}, '조사'), ' 버튼 대화·조사·문 열기 · ', h('b', {}, '인물 탭'), ' 역할 확인 · 가로 화면을 권장합니다']
@@ -45,4 +52,6 @@ export function openMenu({ canContinue, onNew, onContinue }) {
   };
   ui.open(modal);
   newBtn.focus();
+  // 공유용 링크: .../#orchestration 으로 들어오면 해설 영상을 바로 연다
+  if (window.location.hash === '#orchestration') openOrchestration();
 }

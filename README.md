@@ -18,6 +18,21 @@ https://choiyunzin.github.io/ai-murder-mystery/
 `main` 브랜치에 푸시하면 GitHub Actions(`.github/workflows/deploy-pages.yml`)가 빌드해 GitHub Pages 로 배포한다.
 처음 한 번은 저장소 **Settings → Pages → Source** 를 **GitHub Actions** 로 설정해야 한다.
 
+## AI 오케스트레이션
+
+게임에 **AI 오케스트레이션** 개념이 들어가 있다. 여러 AI에게 일을 나눠 맡기고, 결과를 검증·조합해서,
+최종 판단은 사람이 내리는 일하는 방식이다.
+
+- **AI 분석 콘솔 (로비):** 탐정이 문서 요약 · 진술 비교 · 데이터 분석 AI 요원에게 조사를 맡긴다(호출 6회).
+  결과는 "AI 제안"이고, 플레이어가 채택/보류를 판단한다. AI는 가끔 그럴듯한 오답을 내고,
+  결정적 단서인 "문서가 없다"는 사실은 AI가 "변경 없음"으로 잘못 해석한다.
+- **스토리:** 사건의 원인 중 하나가 "현장 리더를 위한 AI 오케스트레이션 실습이 사라진 것"이다.
+- **엔딩:** 사건 재구성 영상 → AI 오케스트레이션 해설 영상 → 리포트(개념 설명, 내 AI 활용 복기, 점수 항목).
+- **팀원 공유용 해설 영상 링크:** https://choiyunzin.github.io/ai-murder-mystery/#orchestration
+  (게임을 하지 않아도 바로 재생된다. 일부 스포일러 포함)
+
+장면 문구는 `src/data/orchestration.json`, AI 요원 보고서는 `src/data/aiAgents.json` 에서 고친다.
+
 ## 조작
 
 | | 데스크톱 | 모바일 |
@@ -69,12 +84,15 @@ src/
 │  ├─ clues.json            단서
 │  ├─ portraits.json        초상화 → 맵 토큰 얼굴 크롭
 │  ├─ gameRules.json        포인트·경계·해금·모순·추론·점수·목표
+│  ├─ aiAgents.json         AI 분석 요원과 보고서(맞는 분석/그럴듯한 오답)
+│  ├─ reconstruction.json   엔딩 '사건 재구성' 영상 장면
+│  ├─ orchestration.json    엔딩 'AI 오케스트레이션 해설' 영상 장면
 │  └─ dialogues/*.json      인물별 대화 트리
 ├─ systems/                 GameState, Conditions, DialogueSystem, EvidenceSystem,
 │                           UnlockSystem, Effects, ScoringSystem, SaveSystem,
-│                           MissionSystem, AudioSystem, Registry
+│                           MissionSystem, AudioSystem, AiLabSystem, Registry
 ├─ entities/                Player, NPC, Door
 ├─ gfx/                     도트 캐릭터·바닥 텍스처, 소품 그림, 초상화 토큰
-├─ ui/                      DOM UI(대화창, 수첩, 문서, 추론 보드, 엔딩, 메뉴, 터치) + Phaser HUD
+├─ ui/                      DOM UI(대화창, 수첩, 문서, AI 콘솔, 추론 보드, 영상, 엔딩, 메뉴, 터치) + Phaser HUD
 └─ scenes/                  Boot, Menu, Lobby, 6개 방(RoomScene 공통), Deduction, Ending
 ```

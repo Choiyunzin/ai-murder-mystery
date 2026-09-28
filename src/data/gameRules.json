@@ -119,14 +119,14 @@
     "perEvidence": 3,
     "perContradiction": 5,
     "efficiency": {
-      "max": 10,
+      "max": 7,
       "freeQuestions": 12,
       "perExtraQuestion": 0.5,
       "perWasted": 2
     },
     "alert": {
-      "max": 8,
-      "perGuardedNpc": 4,
+      "max": 6,
+      "perGuardedNpc": 3,
       "perWarnedNpc": 1
     },
     "grades": [
@@ -150,7 +150,13 @@
         "grade": "D",
         "min": 0
       }
-    ]
+    ],
+    "ai": {
+      "max": 5,
+      "delegateTarget": 3,
+      "delegatePoints": 2,
+      "judgePoints": 3
+    }
   },
   "objectives": [
     {
@@ -166,6 +172,12 @@
           "ev_survey",
           "ev_memo"
         ]
+      }
+    },
+    {
+      "text": "로비의 AI 분석 콘솔에 조사를 맡겨 보자",
+      "done": {
+        "minAiReports": 1
       }
     },
     {

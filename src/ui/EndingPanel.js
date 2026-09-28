@@ -4,7 +4,9 @@ import gameState from '../systems/GameState.js';
 import { computeScore } from '../systems/ScoringSystem.js';
 import { SaveSystem } from '../systems/SaveSystem.js';
 import { openReflections } from './ReflectionsPanel.js';
-import { openCutscene } from './CutscenePlayer.js';
+import { openCutscene, openOrchestration } from './CutscenePlayer.js';
+import { aiReview } from '../systems/AiLabSystem.js';
+import orchestration from '../data/orchestration.json';
 
 const TRUTH = [
   ['배후', '김상무', '철강 시황 악화를 이유로 하반기 교육 예산 재배정을 일방적으로 지시했다. AI 파트는 공문 없이 구두로 처리하게 했다.'],
@@ -14,6 +16,38 @@ const TRUTH = [
 
 function truthList() {
   return h('dl', { class: 'truth' }, TRUTH.flatMap(([k, who, why]) => [h('dt', {}, k), h('dd', {}, h('b', {}, who), ` — ${why}`)]));
+}
+
+/** 엔딩 리포트의 AI 오케스트레이션 섹션: 개념 + 이번 플레이의 AI 활용 복기 */
+function orchestrationSection() {
+  const r = aiReview();
+  const concept = orchestration.scenes.find((s) => s.type === 'concept');
+  const summary = orchestration.scenes.find((s) => s.type === 'narration');
+  const items = r.items.length
+    ? r.items.map((it) =>
+        h(
+          'div',
+          { class: `nb-item ${it.verdict === 'correct' ? 'ai-right' : 'ai-wrong'}` },
+          h('span', { class: 'nb-item-title' }, `${it.agent.name} · ${it.inputLabel}`),
+          h(
+            'div',
+            { class: 'row' },
+            h('span', { class: `verdict ${it.verdict === 'correct' ? 'ok' : 'bad'}` }, it.verdict === 'correct' ? '맞는 분석' : '그럴듯한 오답'),
+            h('span', { class: 'nb-item-sub' }, it.adopted === true ? '채택함' : it.adopted === false ? '보류함' : '판단하지 않음')
+          ),
+          h('span', { class: 'nb-item-text' }, it.note)
+        )
+      )
+    : [h('p', { class: 'ending-note' }, '이번 플레이에서는 AI 분석 콘솔을 쓰지 않았습니다. 다음 플레이에서 AI 요원에게 조사를 맡겨 보세요.')];
+  return h(
+    'section',
+    { class: 'orch' },
+    h('h3', { class: 'orch-title' }, 'AI 오케스트레이션'),
+    h('p', { class: 'orch-def' }, concept.definition),
+    h('p', {}, summary.paragraphs.join(' ')),
+    h('div', { class: 'row' }, h('button', { class: 'btn', onclick: () => openOrchestration() }, '▶ AI 오케스트레이션 해설 영상 보기')),
+    h('div', { class: 'orch-review' }, h('div', { class: 'nb-group' }, `이번 플레이의 AI 활용 · 위임 ${r.calls}회 · 오답 채택 ${r.adoptedWrong}회`), ...items)
+  );
 }
 
 /** CASE CLOSED / 미제 사건 엔딩 */
@@ -77,6 +111,7 @@ export function openEnding({ onRestart }) {
       'article',
       { class: 'ui-modal ending', role: 'dialog', 'aria-label': solved ? 'CASE CLOSED' : '미제 사건' },
       ...body,
+      orchestrationSection(),
       h('div', { class: 'grade-row' }, h('div', { class: 'grade' }, score.grade), scoreEl),
       h('p', { class: 'ending-note' }, '등급은 게임 결과이며 실제 업무평가가 아닙니다.'),
       h(

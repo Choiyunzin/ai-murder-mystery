@@ -2,12 +2,14 @@ import { ui, h } from './UIRoot.js';
 import { openEvidence } from './EvidenceViewer.js';
 import { Registry } from '../systems/Registry.js';
 import gameState from '../systems/GameState.js';
+import { AI } from '../systems/AiLabSystem.js';
 
 const TABS = [
   { id: 'evidence', label: '증거' },
   { id: 'clues', label: '단서' },
   { id: 'statements', label: '진술' },
-  { id: 'contradictions', label: '모순' }
+  { id: 'contradictions', label: '모순' },
+  { id: 'ai', label: 'AI 보고' }
 ];
 
 let current = null;
@@ -63,7 +65,7 @@ export function openNotebook(tab = lastTab) {
       close();
       return true;
     }
-    if (/^[1-4]$/.test(e.key)) {
+    if (/^[1-5]$/.test(e.key)) {
       select(TABS[Number(e.key) - 1].id);
       return true;
     }
@@ -79,6 +81,7 @@ export function openNotebook(tab = lastTab) {
 }
 
 function count(tab) {
+  if (tab === 'ai') return String(gameState.aiReports.length);
   const total = { evidence: Object.keys(Registry.evidences).length, contradictions: Object.keys(Registry.contradictions).length }[tab];
   const n = gameState[tab].length;
   return total ? `${n}/${total}` : String(n);
@@ -118,6 +121,22 @@ const RENDER = {
       h('div', { class: 'nb-group' }, `${Registry.characters[npcId].name} · ${Registry.characters[npcId].role}`),
       ...list.map((s) => h('div', { class: 'nb-item' }, h('span', { class: 'nb-item-text' }, `“${s.text}”`)))
     ]);
+  },
+  ai() {
+    if (!gameState.aiReports.length) return empty('아직 AI에게 맡긴 분석이 없다. 로비의 AI 분석 콘솔을 이용해 보자.');
+    return gameState.aiReports.map((r) => {
+      const agent = AI.agents[r.agent];
+      const report = AI.reports[r.key];
+      const input = agent.inputs === 'npc' ? `${Registry.characters[r.input].name}의 진술` : Registry.evidences[r.input].title;
+      const state = r.adopted === true ? '채택함' : r.adopted === false ? '보류함' : '검증 대기';
+      return h(
+        'div',
+        { class: 'nb-item' },
+        h('span', { class: 'nb-item-title' }, `${agent.name} · ${input}`),
+        h('span', { class: 'nb-item-sub' }, `${state} · AI 제안은 증거로 확인할 것`),
+        h('span', { class: 'nb-item-text' }, report.lines.join('\n'))
+      );
+    });
   },
   contradictions() {
     const total = Object.keys(Registry.contradictions).length;
